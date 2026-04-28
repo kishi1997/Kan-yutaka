@@ -1,0 +1,4801 @@
+<!doctype html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>感豊 | Ordered Chaos</title>
+  <meta name="description" content="感豊の音楽、写真、映像、思考が重なり合うシングルページLP。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nothing+You+Could+Do&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <style>
+    :root {
+      --abyss: #0a0a0a;
+      --bone: #e0e0e0;
+      --pulse: #ff0033;
+      --rust: #b99432;
+      color-scheme: dark;
+      background: var(--abyss);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      overflow-x: hidden;
+      background:
+        radial-gradient(circle at 68% 17%, rgba(255, 0, 51, 0.13), transparent 24rem),
+        radial-gradient(circle at 17% 24%, rgba(185, 148, 50, 0.16), transparent 22rem),
+        var(--abyss);
+      color: var(--bone);
+      font-family: YuMincho, "Yu Mincho", "Hiragino Mincho ProN", serif;
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      pointer-events: none;
+      position: fixed;
+      inset: 0;
+      z-index: 80;
+    }
+
+    body::before {
+      opacity: 0.4;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+        radial-gradient(circle, rgba(255, 255, 255, 0.16) 0.7px, transparent 0.9px);
+      background-size: 100% 4px, 5px 100%, 13px 13px;
+      mix-blend-mode: overlay;
+    }
+
+    body::after {
+      opacity: 0.13;
+      background:
+        repeating-radial-gradient(circle at 12% 8%, transparent 0 2px, rgba(255, 255, 255, 0.34) 3px 3.6px),
+        repeating-linear-gradient(115deg, transparent 0 5px, rgba(255, 0, 51, 0.12) 6px 6.5px);
+      filter: contrast(180%);
+      animation: grain 1.1s steps(2) infinite;
+    }
+
+    @keyframes grain {
+      0% {
+        transform: translate3d(0, 0, 0);
+      }
+
+      25% {
+        transform: translate3d(-1.4%, 1%, 0);
+      }
+
+      50% {
+        transform: translate3d(1%, -1.3%, 0);
+      }
+
+      75% {
+        transform: translate3d(-0.8%, -0.8%, 0);
+      }
+
+      100% {
+        transform: translate3d(0.8%, 1.2%, 0);
+      }
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    .site {
+      position: relative;
+      z-index: 1;
+      isolation: isolate;
+    }
+
+    .chaos-cta {
+      position: fixed;
+      inset: 0;
+      z-index: 45;
+      pointer-events: none;
+    }
+
+    .chaos-cta__link {
+      pointer-events: auto;
+      position: absolute;
+      display: inline-grid;
+      grid-template-columns: auto 1fr;
+      align-items: center;
+      gap: 0.6rem;
+      min-height: 2.7rem;
+      padding: 0.7rem 0.9rem;
+      border-top: 1px solid rgba(185, 148, 50, 0.48);
+      border-bottom: 1px solid rgba(224, 224, 224, 0.13);
+      color: rgba(224, 224, 224, 0.78);
+      background:
+        linear-gradient(90deg, rgba(10, 10, 10, 0.82), rgba(10, 10, 10, 0.24), transparent),
+        linear-gradient(90deg, rgba(185, 148, 50, 0.14), transparent 54%);
+      box-shadow: 0 20px 52px rgba(0, 0, 0, 0.34);
+      font: 0.62rem/1 Montserrat, "Helvetica Neue", Arial, sans-serif;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      transform: rotate(var(--tilt, -2deg));
+      transition: color 180ms ease, border-color 180ms ease, transform 180ms ease;
+    }
+
+    .chaos-cta__link::before {
+      content: attr(data-icon);
+      display: grid;
+      place-items: center;
+      width: 1.55rem;
+      height: 1.55rem;
+      border: 1px solid rgba(224, 224, 224, 0.42);
+      border-radius: 50%;
+      color: rgba(224, 224, 224, 0.86);
+      font-size: 0.72rem;
+      letter-spacing: 0;
+    }
+
+    .chaos-cta__link::after {
+      content: "";
+      position: absolute;
+      left: -0.75rem;
+      right: 12%;
+      bottom: -0.3rem;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(255, 0, 51, 0.62), transparent);
+      opacity: 0.62;
+    }
+
+    .chaos-cta__link:hover {
+      color: var(--rust);
+      border-top-color: rgba(255, 0, 51, 0.56);
+      transform: rotate(var(--tilt, -2deg)) translateY(-3px);
+    }
+
+    .chaos-cta__link--spotify {
+      --tilt: -4deg;
+      left: 7%;
+      bottom: 8.5rem;
+    }
+
+    .chaos-cta__link--youtube {
+      --tilt: 3deg;
+      right: 7.5rem;
+      bottom: 15rem;
+    }
+
+    .chaos-cta__link--instagram {
+      --tilt: -1.5deg;
+      right: 12%;
+      top: 39%;
+    }
+
+    .ambient-bg {
+      pointer-events: none;
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 18% 18%, rgba(185, 148, 50, 0.1), transparent 22rem),
+        radial-gradient(circle at 68% 24%, rgba(224, 224, 224, 0.07), transparent 24rem),
+        radial-gradient(circle at 44% 78%, rgba(255, 0, 51, 0.07), transparent 26rem),
+        var(--abyss);
+    }
+
+    .ambient-bg__photo,
+    .ambient-bg__smoke,
+    .ambient-bg__gold,
+    .ambient-bg__scratch {
+      position: absolute;
+      inset: -8%;
+      will-change: transform;
+    }
+
+    .ambient-bg__photo {
+      opacity: 0.46;
+      background:
+        linear-gradient(90deg, rgba(10, 10, 10, 0.88), rgba(10, 10, 10, 0.3), rgba(10, 10, 10, 0.92)),
+        linear-gradient(0deg, rgba(10, 10, 10, 0.96), rgba(10, 10, 10, 0.28) 46%, rgba(10, 10, 10, 0.86)),
+        url("img/bg/bg-fix.png") center / cover no-repeat;
+      filter: grayscale(0.22) saturate(0.84) contrast(1.16) brightness(0.68);
+      mix-blend-mode: normal;
+      transform: scale(1.06);
+    }
+
+    .ambient-bg__smoke {
+      opacity: 0.28;
+      background:
+        radial-gradient(ellipse at 46% 18%, rgba(224, 224, 224, 0.16), transparent 32%),
+        radial-gradient(ellipse at 58% 42%, rgba(224, 224, 224, 0.1), transparent 34%),
+        radial-gradient(ellipse at 28% 64%, rgba(224, 224, 224, 0.08), transparent 28%);
+      filter: blur(18px);
+      mix-blend-mode: screen;
+    }
+
+    .ambient-bg__gold {
+      opacity: 0.42;
+      background:
+        radial-gradient(circle at 12% 16%, rgba(185, 148, 50, 0.78) 0 2px, transparent 3px),
+        radial-gradient(circle at 18% 22%, rgba(185, 148, 50, 0.48) 0 5px, transparent 6px),
+        radial-gradient(circle at 72% 12%, rgba(185, 148, 50, 0.72) 0 2px, transparent 3px),
+        radial-gradient(circle at 79% 18%, rgba(185, 148, 50, 0.62) 0 6px, transparent 7px),
+        radial-gradient(circle at 86% 32%, rgba(185, 148, 50, 0.52) 0 3px, transparent 4px),
+        radial-gradient(circle at 20% 80%, rgba(185, 148, 50, 0.5) 0 4px, transparent 5px),
+        radial-gradient(circle at 64% 88%, rgba(185, 148, 50, 0.64) 0 2px, transparent 3px);
+      filter: contrast(160%);
+      mix-blend-mode: screen;
+    }
+
+    .ambient-bg__scratch {
+      opacity: 0.16;
+      background:
+        radial-gradient(ellipse at 24% 42%, transparent 0 32%, rgba(224, 224, 224, 0.46) 32.2% 32.5%, transparent 32.8%),
+        radial-gradient(ellipse at 74% 64%, transparent 0 36%, rgba(224, 224, 224, 0.32) 36.2% 36.5%, transparent 36.8%);
+      transform: rotate(-8deg);
+    }
+
+    .brand-mark {
+      position: fixed;
+      left: 1.8rem;
+      top: 2rem;
+      z-index: 50;
+    }
+
+    .brand-mark__jp {
+      display: block;
+      font-size: 2.6rem;
+      letter-spacing: 0.24em;
+      line-height: 1;
+      writing-mode: vertical-rl;
+    }
+
+    .brand-mark__en {
+      display: block;
+      margin-top: 1.25rem;
+      color: rgba(224, 224, 224, 0.58);
+      font: 0.55rem/1 Montserrat, "Helvetica Neue", Arial, sans-serif;
+      letter-spacing: 0.38em;
+      text-transform: uppercase;
+    }
+
+    .side-nav {
+      position: fixed;
+      right: 1.4rem;
+      top: 2rem;
+      z-index: 50;
+      width: 9rem;
+      text-align: right;
+    }
+
+    .side-nav__title {
+      margin-bottom: 4rem;
+      color: rgba(224, 224, 224, 0.78);
+      font: 0.63rem/1 Montserrat, "Helvetica Neue", Arial, sans-serif;
+      letter-spacing: 0.52em;
+      text-transform: uppercase;
+    }
+
+    .side-nav__title::after {
+      content: "";
+      display: block;
+      width: 1.75rem;
+      height: 1px;
+      margin: 0.8rem 0 0 auto;
+      background: rgba(224, 224, 224, 0.55);
+    }
+
+    .side-nav a {
+      display: block;
+      margin-bottom: 2rem;
+    }
+
+    .side-nav__num {
+      margin-right: 0.75rem;
+      color: rgba(224, 224, 224, 0.45);
+      font: 0.64rem/1 Montserrat, "Helvetica Neue", Arial, sans-serif;
+    }
+
+    .side-nav__label {
+      color: rgba(224, 224, 224, 0.82);
+      font: 0.72rem/1 Montserrat, "Helvetica Neue", Arial, sans-serif;
+      letter-spacing: 0.42em;
+    }
+
+    .side-nav__sub {
+      display: block;
+      margin-top: 0.55rem;
+      color: rgba(224, 224, 224, 0.46);
+      font-size: 0.62rem;
+      letter-spacing: 0.18em;
+    }
+
+    .hero {
+      position: relative;
+      min-height: 92svh;
+      overflow: hidden;
+      padding: 5rem 4rem 8rem;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      left: 3%;
+      top: 14%;
+      width: 13rem;
+      height: 13rem;
+      border-radius: 999px;
+      background: rgba(185, 148, 50, 0.16);
+      filter: blur(54px);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: 16%;
+      top: 18%;
+      width: 34rem;
+      height: 34rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.05);
+      filter: blur(64px);
+    }
+
+    .ink-scratch {
+      position: absolute;
+      border: 1px solid rgba(224, 224, 224, 0.2);
+      border-radius: 50%;
+      transform: rotate(-18deg);
+    }
+
+    .scratch-a {
+      left: 18%;
+      top: 34%;
+      width: 32rem;
+      height: 13rem;
+    }
+
+    .scratch-b {
+      right: 21%;
+      top: 42%;
+      width: 21rem;
+      height: 8rem;
+      opacity: 0.3;
+    }
+
+    .hero-grid {
+      position: relative;
+      z-index: 10;
+      display: grid;
+      grid-template-columns: 0.82fr 1.18fr;
+      align-items: center;
+      gap: 3rem;
+      max-width: 1180px;
+      min-height: 78svh;
+      margin: 0 auto;
+    }
+
+    .eyebrow {
+      margin: 0 0 2rem;
+      color: var(--rust);
+      font: 0.66rem/1 Montserrat, "Helvetica Neue", Arial, sans-serif;
+      letter-spacing: 0.46em;
+      text-transform: uppercase;
+    }
+
+    .hero-title {
+      margin: 0;
+      color: var(--bone);
+      font-size: clamp(4.6rem, 15vw, 12.5rem);
+      font-weight: 400;
+      line-height: 0.95;
+    }
+
+    .glitch {
+      position: relative;
+      display: inline-block;
+    }
+
+    .glitch::before,
+    .glitch::after {
+      content: attr(data-text);
+      position: absolute;
+      inset: 0;
+      opacity: 0.72;
+      pointer-events: none;
+    }
+
+    .glitch::before {
+      color: var(--pulse);
+      transform: translate(0.035em, -0.025em);
+      animation: glitch-a 2.6s infinite steps(2, end);
+      mix-blend-mode: screen;
+    }
+
+    .glitch::after {
+      color: #69d8ff;
+      transform: translate(-0.028em, 0.025em);
+      animation: glitch-b 3.1s infinite steps(2, end);
+      mix-blend-mode: screen;
+    }
+
+    @keyframes glitch-a {
+
+      0%,
+      81%,
+      100% {
+        clip-path: inset(0 0 0 0);
+        transform: translate(0.035em, -0.025em);
+      }
+
+      84% {
+        clip-path: inset(17% 0 70% 0);
+        transform: translate(-0.09em, -0.025em);
+      }
+
+      87% {
+        clip-path: inset(64% 0 18% 0);
+        transform: translate(0.11em, 0.045em);
+      }
+
+      90% {
+        clip-path: inset(38% 0 45% 0);
+        transform: translate(-0.04em, 0.02em);
+      }
+    }
+
+    @keyframes glitch-b {
+
+      0%,
+      74%,
+      100% {
+        clip-path: inset(0 0 0 0);
+        transform: translate(-0.028em, 0.025em);
+      }
+
+      77% {
+        clip-path: inset(4% 0 82% 0);
+        transform: translate(0.1em, 0.015em);
+      }
+
+      80% {
+        clip-path: inset(52% 0 32% 0);
+        transform: translate(-0.1em, -0.045em);
+      }
+
+      83% {
+        clip-path: inset(74% 0 6% 0);
+        transform: translate(0.05em, -0.02em);
+      }
+    }
+
+    .noise-reveal {
+      animation: noise-reveal 1.2s steps(7) both;
+    }
+
+    @keyframes noise-reveal {
+      0% {
+        opacity: 0;
+        filter: blur(18px) contrast(280%);
+      }
+
+      30% {
+        opacity: 0.32;
+        filter: blur(7px) contrast(340%);
+      }
+
+      62% {
+        opacity: 0.88;
+        filter: blur(2px) contrast(220%);
+      }
+
+      100% {
+        opacity: 1;
+        filter: blur(0) contrast(100%);
+      }
+    }
+
+    .hero-script {
+      max-width: 30rem;
+      margin: 1.2rem 0 0;
+      color: var(--rust);
+      font-size: clamp(2rem, 5vw, 4.6rem);
+      font-style: italic;
+      line-height: 1.08;
+    }
+
+    .hero-copy {
+      max-width: 24rem;
+      margin: 2.5rem 0 0;
+      color: rgba(224, 224, 224, 0.7);
+      font-size: 0.9rem;
+      line-height: 2;
+      letter-spacing: 0.18em;
+    }
+
+    .portrait {
+      position: relative;
+      width: 100%;
+      height: min(44rem, 72vh);
+      min-height: 32rem;
+    }
+
+    .portrait::before {
+      content: "";
+      position: absolute;
+      inset: 4% 12% 0;
+      z-index: -1;
+      transform: rotate(3deg);
+      background: rgba(255, 0, 51, 0.12);
+      filter: blur(34px);
+    }
+
+    .portrait img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 47% 50%;
+      opacity: 0.8;
+      filter: grayscale(0.85) contrast(1.08);
+      mix-blend-mode: luminosity;
+    }
+
+    .portrait__shade {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, var(--abyss), rgba(10, 10, 10, 0.2), transparent);
+    }
+
+    .portrait__chip-a,
+    .portrait__chip-b {
+      position: absolute;
+      border: 1px solid rgba(224, 224, 224, 0.15);
+      background: rgba(10, 10, 10, 0.2);
+      backdrop-filter: blur(2px);
+    }
+
+    .portrait__chip-a {
+      left: -2rem;
+      top: 14%;
+      width: 7rem;
+      height: 7rem;
+    }
+
+    .portrait__chip-b {
+      right: -1.25rem;
+      bottom: 18%;
+      width: 5rem;
+      height: 11rem;
+      border-color: rgba(255, 0, 51, 0.3);
+      background: rgba(255, 0, 51, 0.1);
+      mix-blend-mode: screen;
+    }
+
+    .image-shard {
+      position: absolute;
+      z-index: 6;
+      overflow: hidden;
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.58);
+      filter: saturate(0.72) contrast(1.1) brightness(0.78);
+    }
+
+    .image-shard img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .shard-a {
+      left: 16%;
+      top: 16%;
+      width: 20rem;
+      height: 12rem;
+      transform: rotate(-6deg);
+    }
+
+    .shard-b {
+      right: 17%;
+      top: 12%;
+      width: 18rem;
+      height: 11rem;
+      transform: rotate(3deg);
+    }
+
+    .shard-c {
+      right: 11%;
+      bottom: 18%;
+      width: 15rem;
+      height: 11rem;
+      transform: rotate(6deg);
+    }
+
+    .shard-d {
+      left: 55%;
+      bottom: 7%;
+      width: 17rem;
+      height: 10rem;
+      transform: rotate(-3deg);
+    }
+
+    .wave-row {
+      position: relative;
+      z-index: 20;
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 2rem;
+      max-width: 1180px;
+      margin: 2.5rem auto 0;
+    }
+
+    .wave-label {
+      color: var(--rust);
+      font: 0.6rem/1 Montserrat, "Helvetica Neue", Arial, sans-serif;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+    }
+
+    .waveform {
+      height: 4rem;
+      margin-top: 1rem;
+      overflow: hidden;
+      opacity: 0.55;
+    }
+
+    .waveform span {
+      display: inline-block;
+      width: 3px;
+      margin-right: 3px;
+      vertical-align: bottom;
+      background: rgba(224, 224, 224, 0.74);
+    }
+
+    .scroll-link {
+      color: rgba(224, 224, 224, 0.65);
+      font: 0.62rem/1 Montserrat, "Helvetica Neue", Arial, sans-serif;
+      letter-spacing: 0.42em;
+      text-transform: uppercase;
+    }
+
+    .scroll-link::after {
+      content: "";
+      display: inline-block;
+      width: 4rem;
+      height: 1px;
+      margin-left: 1.25rem;
+      vertical-align: middle;
+      background: rgba(224, 224, 224, 0.45);
+    }
+
+    .sound {
+      position: relative;
+      min-height: 124svh;
+      overflow: hidden;
+      padding: 13rem 4rem 16rem;
+    }
+
+    .sound::before {
+      content: "";
+      position: absolute;
+      left: 8%;
+      top: 14%;
+      width: 44rem;
+      height: 44rem;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle, rgba(255, 0, 51, 0.16), transparent 48%),
+        repeating-conic-gradient(from 12deg, rgba(224, 224, 224, 0.12) 0deg 1deg, transparent 1deg 8deg);
+      opacity: 0.3;
+      filter: blur(1px);
+      transform: rotate(-11deg);
+    }
+
+    /* 
+    .sound::after {
+      content: "noise / breath / memory / overflow / sound / silence";
+      position: absolute;
+      right: -5rem;
+      bottom: 10rem;
+      color: rgba(224, 224, 224, 0.045);
+      font: 700 clamp(5rem, 14vw, 13rem)/0.9 Montserrat, "Helvetica Neue", Arial, sans-serif;
+      letter-spacing: 0;
+      text-transform: uppercase;
+      white-space: nowrap;
+      transform: rotate(-6deg);
+    } */
+
+    .sound-grid {
+      position: relative;
+      z-index: 5;
+      display: grid;
+      grid-template-columns: 0.64fr 1.36fr;
+      gap: 5rem;
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    .sound-intro {
+      position: sticky;
+      top: 7rem;
+      align-self: start;
+    }
+
+    .sound-heading {
+      margin: 1.5rem 0 0;
+      font-size: clamp(3.4rem, 8vw, 8rem);
+      font-weight: 400;
+      line-height: 1;
+    }
+
+    .sound-copy {
+      max-width: 24rem;
+      margin-top: 2rem;
+      color: rgba(224, 224, 224, 0.62);
+      font-size: 0.9rem;
+      line-height: 2;
+      letter-spacing: 0.18em;
+    }
+
+    .sound-code {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.7rem 1.2rem;
+      max-width: 25rem;
+      margin-top: 3rem;
+      padding-top: 1.4rem;
+      border-top: 1px solid rgba(224, 224, 224, 0.15);
+    }
+
+    .sound-code span {
+      color: rgba(224, 224, 224, 0.42);
+      font: 0.62rem/1.7 Montserrat, "Helvetica Neue", Arial, sans-serif;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    .sound-stage {
+      position: relative;
+    }
+
+    .lyric-noise {
+      pointer-events: none;
+      position: absolute;
+      inset: -6rem -2rem auto;
+      z-index: 1;
+      height: 30rem;
+      overflow: hidden;
+      color: rgba(224, 224, 224, 0.09);
+      font-size: clamp(1.2rem, 2.3vw, 2.6rem);
+      line-height: 1.4;
+      letter-spacing: 0.28em;
+      mix-blend-mode: screen;
+    }
+
+    .lyric-noise span {
+      position: absolute;
+      display: block;
+      white-space: nowrap;
+      filter: blur(0.4px);
+    }
+
+    .lyric-noise span:nth-child(1) {
+      left: 3%;
+      top: 4%;
+      transform: rotate(-5deg);
+    }
+
+    .lyric-noise span:nth-child(2) {
+      left: 20%;
+      top: 38%;
+      color: rgba(255, 0, 51, 0.13);
+      transform: rotate(3deg);
+    }
+
+    .lyric-noise span:nth-child(3) {
+      left: -12%;
+      top: 68%;
+      transform: rotate(-2deg);
+    }
+
+    .players {
+      position: relative;
+      z-index: 4;
+      min-height: 46rem;
+    }
+
+    .spotify-shell {
+      position: absolute;
+      width: 74%;
+      min-height: 198px;
+      padding: 1.15rem;
+      border: 1px solid rgba(224, 224, 224, 0.16);
+      background:
+        linear-gradient(135deg, rgba(255, 0, 51, 0.2), transparent 34%),
+        linear-gradient(180deg, rgba(224, 224, 224, 0.08), transparent),
+        rgba(18, 18, 18, 0.76);
+      box-shadow: 0 18px 70px rgba(0, 0, 0, 0.48);
+      backdrop-filter: blur(8px);
+    }
+
+    .spotify-shell::before,
+    .spotify-shell::after {
+      content: "";
+      position: absolute;
+      pointer-events: none;
+      inset: 0;
+    }
+
+    .spotify-shell::before {
+      border: 1px solid rgba(255, 0, 51, 0.2);
+      transform: translate(10px, -9px);
+      mix-blend-mode: screen;
+    }
+
+    .spotify-shell::after {
+      opacity: 0.28;
+      background:
+        linear-gradient(90deg, transparent 0 24%, rgba(255, 0, 51, 0.38) 24% 25%, transparent 25% 58%, rgba(105, 216, 255, 0.28) 58% 59%, transparent 59%),
+        repeating-linear-gradient(0deg, transparent 0 7px, rgba(255, 255, 255, 0.08) 8px 8.5px);
+    }
+
+    .spotify-shell:nth-child(1) {
+      top: 0;
+      right: 18%;
+      transform: rotate(-2.5deg);
+    }
+
+    .spotify-shell:nth-child(2) {
+      top: 10.2rem;
+      right: 0;
+      transform: rotate(2.8deg);
+    }
+
+    .spotify-shell:nth-child(3) {
+      top: 21rem;
+      right: 24%;
+      transform: rotate(-1.4deg);
+    }
+
+    .spotify-shell:nth-child(4) {
+      top: 31rem;
+      right: 5%;
+      transform: rotate(1.8deg);
+    }
+
+    .player-meta {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+
+    .player-num {
+      color: var(--pulse);
+      font: 0.65rem/1 Montserrat, "Helvetica Neue", Arial, sans-serif;
+      letter-spacing: 0.38em;
+    }
+
+    .player-note {
+      color: rgba(224, 224, 224, 0.42);
+      font: 0.55rem/1 Montserrat, "Helvetica Neue", Arial, sans-serif;
+      letter-spacing: 0.36em;
+      text-transform: uppercase;
+    }
+
+    .player-title {
+      position: relative;
+      z-index: 2;
+      margin: 1.4rem 0 0;
+      font-size: clamp(1.45rem, 2.2vw, 2rem);
+    }
+
+    .embed-slot {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      align-items: center;
+      gap: 1rem;
+      min-height: 76px;
+      margin-top: 1rem;
+      padding: 0.8rem 0.95rem;
+      border: 1px solid rgba(224, 224, 224, 0.12);
+      background: rgba(0, 0, 0, 0.28);
+    }
+
+    .embed-slot iframe {
+      display: block;
+      width: 100%;
+      min-height: 80px;
+      border: 0;
+    }
+
+    .play-mark {
+      display: grid;
+      place-items: center;
+      width: 2.7rem;
+      height: 2.7rem;
+      border: 1px solid rgba(224, 224, 224, 0.42);
+      border-radius: 50%;
+      color: rgba(224, 224, 224, 0.8);
+      font: 0.75rem/1 Montserrat, "Helvetica Neue", Arial, sans-serif;
+    }
+
+    .mini-wave {
+      height: 2.5rem;
+      margin-top: 0.15rem;
+      overflow: hidden;
+      opacity: 0.48;
+    }
+
+    .mini-wave span {
+      display: inline-block;
+      width: 2px;
+      margin-right: 4px;
+      vertical-align: bottom;
+      background: rgba(224, 224, 224, 0.8);
+    }
+
+    .track-index {
+      position: relative;
+      z-index: 3;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.8rem 1rem;
+      max-width: 1180px;
+      margin: 7rem auto 0;
+    }
+
+    .track-row {
+      display: grid;
+      grid-template-columns: 2.5rem 1fr auto;
+      align-items: center;
+      gap: 1rem;
+      min-height: 4.2rem;
+      border-top: 1px solid rgba(224, 224, 224, 0.1);
+      color: rgba(224, 224, 224, 0.74);
+    }
+
+    .track-row:nth-child(even) {
+      transform: translateY(1.7rem);
+    }
+
+    .track-row__num,
+    .track-row__time {
+      color: rgba(224, 224, 224, 0.42);
+      font: 0.62rem/1 Montserrat, "Helvetica Neue", Arial, sans-serif;
+      letter-spacing: 0.24em;
+    }
+
+    .track-row__title {
+      font-size: clamp(0.95rem, 1.4vw, 1.18rem);
+      letter-spacing: 0.12em;
+    }
+
+    .gold-splash,
+    .mist-field {
+      pointer-events: none;
+      position: absolute;
+      z-index: 1;
+    }
+
+    .gold-splash {
+      width: 26rem;
+      height: 23rem;
+      opacity: 0.78;
+      background:
+        radial-gradient(circle at 10% 18%, rgba(185, 148, 50, 0.9) 0 2px, transparent 3px),
+        radial-gradient(circle at 18% 28%, rgba(185, 148, 50, 0.7) 0 4px, transparent 5px),
+        radial-gradient(circle at 31% 12%, rgba(185, 148, 50, 0.75) 0 2px, transparent 3px),
+        radial-gradient(circle at 42% 34%, rgba(185, 148, 50, 0.85) 0 7px, transparent 8px),
+        radial-gradient(circle at 62% 21%, rgba(185, 148, 50, 0.65) 0 3px, transparent 4px),
+        radial-gradient(circle at 72% 46%, rgba(185, 148, 50, 0.8) 0 5px, transparent 6px),
+        radial-gradient(circle at 84% 32%, rgba(185, 148, 50, 0.55) 0 2px, transparent 3px),
+        radial-gradient(circle at 24% 72%, rgba(185, 148, 50, 0.68) 0 6px, transparent 7px),
+        radial-gradient(circle at 55% 76%, rgba(185, 148, 50, 0.78) 0 3px, transparent 4px),
+        radial-gradient(circle at 81% 82%, rgba(185, 148, 50, 0.75) 0 8px, transparent 9px);
+      filter: blur(0.2px) contrast(150%);
+      mix-blend-mode: screen;
+    }
+
+    .splash-sound-a {
+      left: 8%;
+      top: 10rem;
+      transform: rotate(-18deg);
+    }
+
+    .splash-sound-b {
+      right: 16%;
+      top: 26rem;
+      transform: rotate(12deg) scale(0.85);
+    }
+
+    .splash-hero-a {
+      left: 10%;
+      top: 3.5rem;
+      transform: rotate(-10deg) scale(0.82);
+    }
+
+    .splash-hero-b {
+      right: 12%;
+      top: 5.2rem;
+      transform: rotate(14deg) scale(0.58);
+    }
+
+    .mist-field {
+      left: 35%;
+      top: 5rem;
+      width: 44rem;
+      height: 34rem;
+      opacity: 0.34;
+      background:
+        radial-gradient(ellipse at 42% 48%, rgba(224, 224, 224, 0.18), transparent 36%),
+        radial-gradient(ellipse at 60% 36%, rgba(224, 224, 224, 0.11), transparent 34%),
+        radial-gradient(ellipse at 28% 62%, rgba(224, 224, 224, 0.08), transparent 28%);
+      filter: blur(18px);
+      mix-blend-mode: screen;
+    }
+
+    .section-sign {
+      position: relative;
+      z-index: 4;
+    }
+
+    .section-sign__num {
+      color: var(--rust);
+      font-size: clamp(2.2rem, 4vw, 3.8rem);
+      line-height: 1;
+      letter-spacing: 0.08em;
+    }
+
+    .section-sign__num::after {
+      content: "";
+      display: inline-block;
+      width: 3rem;
+      height: 1px;
+      margin-left: 1rem;
+      vertical-align: middle;
+      background: rgba(224, 224, 224, 0.45);
+    }
+
+    .section-sign__title {
+      margin: 0.75rem 0 0;
+      color: var(--bone);
+      font-size: clamp(1.8rem, 3vw, 2.7rem);
+      font-weight: 400;
+      line-height: 1;
+      letter-spacing: 0.2em;
+    }
+
+    .section-sign__sub {
+      margin: 0.75rem 0 0;
+      color: rgba(224, 224, 224, 0.62);
+      font-size: 0.78rem;
+      letter-spacing: 0.24em;
+    }
+
+    .section-sign__link {
+      display: inline-block;
+      margin-top: 2.2rem;
+      color: var(--rust);
+      font: 0.62rem/1 Montserrat, "Helvetica Neue", Arial, sans-serif;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+    }
+
+    .section-sign__link::after {
+      content: "";
+      display: inline-block;
+      width: 3.8rem;
+      height: 1px;
+      margin-left: 1rem;
+      vertical-align: middle;
+      background: var(--rust);
+    }
+
+    .sound {
+      padding-top: 10rem;
+    }
+
+    .sound-grid {
+      display: block;
+    }
+
+    .sound-frame {
+      position: relative;
+      z-index: 5;
+      display: grid;
+      grid-template-columns: 0.42fr 0.5fr 0.58fr;
+      align-items: center;
+      gap: 2.7rem;
+      max-width: 1180px;
+      min-height: 34rem;
+      margin: 0 auto;
+    }
+
+    .sound-cover {
+      position: relative;
+      z-index: 4;
+      width: min(100%, 17.5rem);
+      margin: 0 auto;
+      transform: rotate(2deg);
+      box-shadow: 0 26px 80px rgba(0, 0, 0, 0.65);
+    }
+
+    .sound-cover::before {
+      content: "";
+      position: absolute;
+      inset: -1.25rem -1rem auto auto;
+      width: 8rem;
+      height: 8rem;
+      background:
+        radial-gradient(circle at 25% 35%, rgba(185, 148, 50, 0.9) 0 6px, transparent 7px),
+        radial-gradient(circle at 55% 30%, rgba(185, 148, 50, 0.7) 0 3px, transparent 4px),
+        radial-gradient(circle at 70% 64%, rgba(185, 148, 50, 0.9) 0 8px, transparent 9px);
+      mix-blend-mode: screen;
+    }
+
+    .sound-cover img {
+      width: 100%;
+      aspect-ratio: 0.78;
+      object-fit: cover;
+      object-position: 45% 50%;
+      filter: grayscale(0.7) contrast(1.15) brightness(0.74);
+    }
+
+    .sound-copy {
+      max-width: 18rem;
+      margin: 2.1rem 0 0;
+      font-size: 0.82rem;
+    }
+
+    .sound-code {
+      display: none;
+    }
+
+    .playlist-panel {
+      position: relative;
+      z-index: 5;
+      max-width: 26rem;
+      padding: 1rem 0;
+    }
+
+    .playlist-panel__title {
+      margin: 0 0 1.45rem;
+      color: rgba(224, 224, 224, 0.82);
+      font-size: 0.95rem;
+      letter-spacing: 0.12em;
+    }
+
+    .album-list {
+      display: grid;
+      gap: 0.85rem;
+      max-width: 19rem;
+    }
+
+    .album-list__row {
+      display: grid;
+      grid-template-columns: 1.4rem 1fr auto;
+      gap: 1rem;
+      color: rgba(224, 224, 224, 0.68);
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+    }
+
+    .album-list__row span:first-child,
+    .album-list__row span:last-child {
+      color: rgba(224, 224, 224, 0.42);
+      font: 0.62rem/1.8 Montserrat, "Helvetica Neue", Arial, sans-serif;
+      letter-spacing: 0.12em;
+    }
+
+    .listen-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem 1.35rem;
+      margin-top: 2.4rem;
+    }
+
+    .listen-row a {
+      color: rgba(224, 224, 224, 0.62);
+      font: 0.68rem/1 Montserrat, "Helvetica Neue", Arial, sans-serif;
+      letter-spacing: 0.08em;
+    }
+
+    .listen-row a::before {
+      content: "";
+      display: inline-block;
+      width: 0.55rem;
+      height: 0.55rem;
+      margin-right: 0.45rem;
+      border: 1px solid rgba(224, 224, 224, 0.6);
+      border-radius: 50%;
+      vertical-align: -0.04rem;
+    }
+
+    .sound-stage {
+      max-width: 1180px;
+      margin: 5rem auto 0;
+    }
+
+    .sound-photo-stack {
+      pointer-events: none;
+      position: absolute;
+      inset: auto 0 -5rem auto;
+      z-index: 2;
+      width: 52%;
+      min-height: 18rem;
+    }
+
+    .sound-photo-stack figure {
+      position: absolute;
+      overflow: hidden;
+      box-shadow: 0 22px 70px rgba(0, 0, 0, 0.62);
+    }
+
+    .sound-photo-stack img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: saturate(0.82) contrast(1.1) brightness(0.72);
+    }
+
+    .sound-photo-stack figure:nth-child(1) {
+      right: 35%;
+      top: -5rem;
+      width: 13rem;
+      height: 8rem;
+      transform: rotate(-4deg);
+    }
+
+    .sound-photo-stack figure:nth-child(2) {
+      right: 0;
+      top: -1rem;
+      width: 20rem;
+      height: 12rem;
+      transform: rotate(3deg);
+    }
+
+    .sound-photo-stack figure:nth-child(3) {
+      right: 22%;
+      top: 8rem;
+      width: 16rem;
+      height: 10rem;
+      transform: rotate(-2deg);
+    }
+
+    .embed-chaos {
+      position: relative;
+      z-index: 5;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 2rem;
+      width: min(100%, 58rem);
+    }
+
+    .embed-chaos .spotify-shell {
+      position: relative;
+      inset: auto;
+      width: 100%;
+      min-height: 172px;
+    }
+
+    .embed-chaos .spotify-shell:nth-child(1) {
+      transform: rotate(-1.7deg) translateY(1rem);
+    }
+
+    .embed-chaos .spotify-shell:nth-child(2) {
+      transform: rotate(2.2deg) translateY(-1.5rem);
+    }
+
+    .embed-chaos .spotify-shell:nth-child(3) {
+      transform: rotate(-1.1deg) translate(2.6rem, -0.4rem);
+    }
+
+    .embed-chaos .spotify-shell:nth-child(4) {
+      transform: rotate(1.4deg) translate(-1rem, 1.2rem);
+    }
+
+    .eye {
+      position: relative;
+      min-height: 118svh;
+      overflow: hidden;
+      padding: 13rem 4rem 16rem;
+    }
+
+    .eye::before {
+      content: "";
+      position: absolute;
+      left: 4%;
+      top: 8rem;
+      width: 46rem;
+      height: 40rem;
+      opacity: 0.16;
+      background:
+        radial-gradient(ellipse at 48% 34%, rgba(224, 224, 224, 0.32), transparent 42%),
+        radial-gradient(ellipse at 35% 60%, rgba(255, 255, 255, 0.16), transparent 34%);
+      filter: blur(16px);
+      mix-blend-mode: screen;
+    }
+
+    .eye::after {
+      content: "";
+      position: absolute;
+      right: 6%;
+      bottom: 8rem;
+      width: 30rem;
+      height: 22rem;
+      opacity: 0.22;
+      border: 1px solid rgba(224, 224, 224, 0.18);
+      border-radius: 50%;
+      transform: rotate(-12deg);
+    }
+
+    .splash-eye-a {
+      left: 43%;
+      top: 7rem;
+      transform: rotate(-7deg) scale(0.72);
+    }
+
+    .splash-eye-b {
+      right: 8%;
+      bottom: 14rem;
+      transform: rotate(18deg) scale(0.64);
+    }
+
+    .eye-frame {
+      position: relative;
+      z-index: 5;
+      max-width: 1180px;
+      min-height: 42rem;
+      margin: 0 auto;
+    }
+
+    .eye-sign {
+      position: absolute;
+      right: 18%;
+      top: 2rem;
+      z-index: 8;
+      min-width: 14rem;
+    }
+
+    .eye-lead {
+      position: absolute;
+      right: 8%;
+      top: 16rem;
+      z-index: 8;
+      max-width: 20rem;
+      color: rgba(224, 224, 224, 0.66);
+      font-size: 0.82rem;
+      line-height: 2;
+      letter-spacing: 0.18em;
+    }
+
+    .gallery-chaos {
+      position: absolute;
+      inset: 0;
+      z-index: 5;
+    }
+
+    .eye-photo {
+      position: absolute;
+      overflow: hidden;
+      box-shadow: 0 28px 86px rgba(0, 0, 0, 0.68);
+    }
+
+    .eye-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: saturate(0.72) contrast(1.12) brightness(0.76);
+    }
+
+    .eye-photo--main {
+      right: 0;
+      top: 5rem;
+      width: min(48vw, 32rem);
+      height: 19rem;
+      transform: rotate(2deg);
+    }
+
+    .eye-photo--left {
+      left: 10%;
+      top: 0;
+      width: 18rem;
+      height: 25rem;
+      transform: rotate(-5deg);
+    }
+
+    .eye-photo--mid {
+      left: 38%;
+      top: 12rem;
+      width: 17rem;
+      height: 12rem;
+      transform: rotate(3deg);
+    }
+
+    .eye-photo--low {
+      left: 47%;
+      top: 25rem;
+      width: 21rem;
+      height: 14rem;
+      transform: rotate(-3deg);
+    }
+
+    .eye-photo--small {
+      left: 3%;
+      top: 29rem;
+      width: 15rem;
+      height: 9rem;
+      transform: rotate(7deg);
+    }
+
+    .eye-photo--tall {
+      right: 15%;
+      top: 29rem;
+      width: 10rem;
+      height: 15rem;
+      transform: rotate(5deg);
+    }
+
+    .photo-caption {
+      position: absolute;
+      left: 8%;
+      bottom: 1rem;
+      z-index: 9;
+      color: rgba(224, 224, 224, 0.58);
+      font-size: 0.74rem;
+      letter-spacing: 0.18em;
+    }
+
+    .photo-caption::before {
+      content: "";
+      display: inline-block;
+      width: 3rem;
+      height: 1px;
+      margin-right: 1rem;
+      vertical-align: middle;
+      background: rgba(224, 224, 224, 0.38);
+    }
+
+    .channel {
+      position: relative;
+      min-height: 112svh;
+      overflow: hidden;
+      padding: 12rem 4rem 16rem;
+    }
+
+    .channel::before {
+      content: "";
+      position: absolute;
+      left: 5%;
+      top: 15rem;
+      width: 34rem;
+      height: 22rem;
+      opacity: 0.18;
+      background:
+        linear-gradient(90deg, rgba(224, 224, 224, 0.16), transparent 72%),
+        repeating-linear-gradient(0deg, transparent 0 7px, rgba(255, 255, 255, 0.12) 8px 8.5px);
+      transform: rotate(-4deg);
+      mix-blend-mode: screen;
+    }
+
+    .channel::after {
+      content: "";
+      position: absolute;
+      right: 12%;
+      top: 8rem;
+      width: 28rem;
+      height: 28rem;
+      border-radius: 50%;
+      opacity: 0.22;
+      background: radial-gradient(circle, rgba(185, 148, 50, 0.16), transparent 58%);
+      filter: blur(18px);
+    }
+
+    .splash-channel-a {
+      left: 7%;
+      top: 31rem;
+      transform: rotate(-12deg) scale(0.66);
+    }
+
+    .splash-channel-b {
+      right: 20%;
+      top: 9rem;
+      transform: rotate(18deg) scale(0.58);
+    }
+
+    .channel-frame {
+      position: relative;
+      z-index: 5;
+      display: grid;
+      grid-template-columns: 0.34fr 1fr;
+      gap: 3rem;
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    .channel-sign {
+      padding-top: 3rem;
+    }
+
+    .channel-board {
+      position: relative;
+      min-height: 42rem;
+    }
+
+    .video-window {
+      position: relative;
+      z-index: 5;
+      width: min(100%, 42rem);
+      margin-left: 1rem;
+      overflow: hidden;
+      background: #050505;
+      box-shadow: 0 32px 92px rgba(0, 0, 0, 0.72);
+      transform: rotate(-1.4deg);
+    }
+
+    .video-window img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      filter: saturate(0.68) contrast(1.18) brightness(0.72);
+    }
+
+    .video-window::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.3;
+      background:
+        radial-gradient(circle at 50% 45%, transparent 0 18%, rgba(10, 10, 10, 0.34) 54%, rgba(10, 10, 10, 0.76)),
+        repeating-linear-gradient(0deg, transparent 0 6px, rgba(255, 255, 255, 0.12) 7px 7.5px);
+    }
+
+    .video-play {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      z-index: 3;
+      display: grid;
+      place-items: center;
+      width: 4.4rem;
+      height: 4.4rem;
+      border: 1px solid rgba(224, 224, 224, 0.72);
+      border-radius: 50%;
+      color: rgba(224, 224, 224, 0.92);
+      font: 1rem/1 Montserrat, "Helvetica Neue", Arial, sans-serif;
+      transform: translate(-50%, -50%);
+      backdrop-filter: blur(2px);
+    }
+
+    .video-controls {
+      position: absolute;
+      inset: auto 0 0;
+      z-index: 4;
+      display: grid;
+      grid-template-columns: auto 1fr auto auto auto;
+      align-items: center;
+      gap: 0.8rem;
+      padding: 0.65rem 0.9rem;
+      background: rgba(0, 0, 0, 0.72);
+      color: rgba(224, 224, 224, 0.68);
+      font: 0.58rem/1 Montserrat, "Helvetica Neue", Arial, sans-serif;
+      letter-spacing: 0.08em;
+    }
+
+    .video-progress {
+      height: 2px;
+      background: linear-gradient(90deg, var(--rust) 0 38%, rgba(224, 224, 224, 0.28) 38%);
+    }
+
+    .video-thumbs {
+      position: relative;
+      z-index: 6;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.9rem;
+      width: min(100%, 42rem);
+      margin: 1.4rem 0 0 0;
+    }
+
+    .video-thumb {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(224, 224, 224, 0.14);
+      background: #060606;
+    }
+
+    .video-thumb img {
+      width: 100%;
+      aspect-ratio: 1.45;
+      object-fit: cover;
+      filter: saturate(0.68) contrast(1.12) brightness(0.68);
+    }
+
+    .video-thumb::after {
+      content: "▶";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      display: grid;
+      place-items: center;
+      width: 2.25rem;
+      height: 2.25rem;
+      border: 1px solid rgba(224, 224, 224, 0.56);
+      border-radius: 50%;
+      color: rgba(224, 224, 224, 0.78);
+      font-size: 0.6rem;
+      transform: translate(-50%, -50%);
+    }
+
+    .channel-fragments {
+      pointer-events: none;
+      position: absolute;
+      right: -1rem;
+      top: -5rem;
+      z-index: 3;
+      width: 24rem;
+      height: 30rem;
+    }
+
+    .channel-fragments figure {
+      position: absolute;
+      overflow: hidden;
+      box-shadow: 0 24px 72px rgba(0, 0, 0, 0.64);
+    }
+
+    .channel-fragments img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(0.4) saturate(0.72) contrast(1.16) brightness(0.7);
+    }
+
+    .channel-fragments figure:nth-child(1) {
+      right: 5rem;
+      top: 0;
+      width: 11rem;
+      height: 8rem;
+      transform: rotate(5deg);
+    }
+
+    .channel-fragments figure:nth-child(2) {
+      right: 0;
+      top: 9rem;
+      width: 8rem;
+      height: 12rem;
+      transform: rotate(-4deg);
+    }
+
+    .channel-fragments figure:nth-child(3) {
+      right: 11rem;
+      top: 17rem;
+      width: 12rem;
+      height: 8rem;
+      transform: rotate(7deg);
+    }
+
+    .channel-note {
+      position: absolute;
+      right: 3%;
+      bottom: 1rem;
+      z-index: 7;
+      max-width: 18rem;
+      color: rgba(224, 224, 224, 0.58);
+      font-size: 0.78rem;
+      line-height: 2;
+      letter-spacing: 0.18em;
+    }
+
+    .log {
+      position: relative;
+      min-height: 112svh;
+      overflow: hidden;
+      padding: 12rem 4rem 6rem;
+    }
+
+    .log::before {
+      content: "";
+      position: absolute;
+      left: -10rem;
+      top: 14rem;
+      width: 46rem;
+      height: 22rem;
+      opacity: 0.24;
+      border: 1px solid rgba(185, 148, 50, 0.28);
+      border-radius: 50%;
+      transform: rotate(-19deg);
+    }
+
+    .log::after {
+      content: "";
+      position: absolute;
+      left: 19%;
+      bottom: 12rem;
+      width: 30rem;
+      height: 18rem;
+      opacity: 0.14;
+      background:
+        radial-gradient(ellipse at 42% 42%, rgba(224, 224, 224, 0.28), transparent 48%),
+        repeating-linear-gradient(115deg, transparent 0 10px, rgba(185, 148, 50, 0.18) 11px 12px);
+      filter: blur(10px);
+    }
+
+    .splash-log-a {
+      left: 3%;
+      top: 17rem;
+      transform: rotate(14deg) scale(0.72);
+    }
+
+    .splash-log-b {
+      right: 22%;
+      bottom: 18rem;
+      transform: rotate(-16deg) scale(0.64);
+    }
+
+    .log-frame {
+      position: relative;
+      z-index: 5;
+      display: grid;
+      grid-template-columns: 0.36fr 1fr;
+      gap: 4rem;
+      max-width: 1180px;
+      min-height: 44rem;
+      margin: 0 auto;
+    }
+
+    .log-sign {
+      padding-top: 5rem;
+    }
+
+    .scrapbook {
+      position: relative;
+      min-height: 42rem;
+    }
+
+    .paper {
+      position: absolute;
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.65);
+    }
+
+    .paper::before {
+      content: "";
+      position: absolute;
+      inset: -0.8rem auto auto 2rem;
+      width: 5.2rem;
+      height: 1.6rem;
+      background: rgba(198, 177, 126, 0.38);
+      transform: rotate(-5deg);
+      mix-blend-mode: screen;
+    }
+
+    .paper-photo {
+      left: 7%;
+      top: 5rem;
+      z-index: 5;
+      width: 20rem;
+      padding: 0.7rem;
+      background: rgba(214, 204, 180, 0.85);
+      transform: rotate(-4deg);
+    }
+
+    .paper-photo img {
+      width: 100%;
+      aspect-ratio: 1.42;
+      object-fit: cover;
+      filter: saturate(0.72) contrast(1.05) brightness(0.8);
+    }
+
+    .paper-note {
+      right: 8%;
+      top: 2rem;
+      z-index: 6;
+      width: 24rem;
+      min-height: 20rem;
+      padding: 2.2rem 2.2rem 2rem;
+      background:
+        linear-gradient(90deg, rgba(0, 0, 0, 0.06) 1px, transparent 1px),
+        linear-gradient(rgba(0, 0, 0, 0.07) 1px, transparent 1px),
+        #d9d0b9;
+      background-size: 18px 18px, 100% 1.9rem, auto;
+      color: rgba(20, 18, 14, 0.78);
+      transform: rotate(4deg);
+    }
+
+    .paper-note p {
+      margin: 0;
+      font-size: 0.88rem;
+      line-height: 2;
+      letter-spacing: 0.08em;
+    }
+
+    .paper-note em {
+      display: block;
+      margin-bottom: 1rem;
+      color: rgba(20, 18, 14, 0.55);
+      font: 0.62rem/1 Montserrat, "Helvetica Neue", Arial, sans-serif;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+    }
+
+    .paper-bird {
+      right: 20%;
+      top: 23rem;
+      z-index: 7;
+      width: 13rem;
+      padding: 0.55rem;
+      background: rgba(230, 224, 210, 0.82);
+      transform: rotate(-8deg);
+    }
+
+    .paper-bird img {
+      width: 100%;
+      aspect-ratio: 1.1;
+      object-fit: cover;
+      filter: grayscale(0.8) contrast(1.1) brightness(0.72);
+    }
+
+    .paper-small {
+      left: 34%;
+      top: 23rem;
+      z-index: 4;
+      width: 12rem;
+      padding: 0.45rem;
+      background: rgba(216, 210, 196, 0.78);
+      transform: rotate(9deg);
+    }
+
+    .paper-small img {
+      width: 100%;
+      aspect-ratio: 0.78;
+      object-fit: cover;
+      filter: grayscale(0.35) contrast(1.05) brightness(0.78);
+    }
+
+    .botanical-line {
+      position: absolute;
+      right: -1rem;
+      top: 18rem;
+      z-index: 3;
+      width: 14rem;
+      height: 20rem;
+      opacity: 0.34;
+      background:
+        linear-gradient(105deg, transparent 0 48%, rgba(224, 224, 224, 0.6) 49% 50%, transparent 51%),
+        radial-gradient(circle at 42% 28%, rgba(224, 224, 224, 0.64) 0 2px, transparent 3px),
+        radial-gradient(circle at 52% 38%, rgba(224, 224, 224, 0.54) 0 2px, transparent 3px),
+        radial-gradient(circle at 35% 50%, rgba(224, 224, 224, 0.58) 0 2px, transparent 3px),
+        radial-gradient(circle at 62% 58%, rgba(224, 224, 224, 0.5) 0 2px, transparent 3px);
+      transform: rotate(12deg);
+    }
+
+    .news-block {
+      position: relative;
+      z-index: 6;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      max-width: 1180px;
+      margin: 6rem auto 0;
+      padding-top: 3rem;
+    }
+
+    .news-list {
+      max-width: 28rem;
+      justify-self: end;
+    }
+
+    .news-title {
+      margin: 0 0 1.7rem;
+      color: var(--rust);
+      font: 0.76rem/1 Montserrat, "Helvetica Neue", Arial, sans-serif;
+      letter-spacing: 0.38em;
+      text-transform: uppercase;
+    }
+
+    .news-item {
+      display: grid;
+      gap: 0.5rem;
+      margin-bottom: 1.4rem;
+      color: rgba(224, 224, 224, 0.58);
+      font-size: 0.82rem;
+      line-height: 1.8;
+      letter-spacing: 0.14em;
+    }
+
+    .news-item time {
+      color: rgba(224, 224, 224, 0.42);
+      font: 0.62rem/1 Montserrat, "Helvetica Neue", Arial, sans-serif;
+      letter-spacing: 0.2em;
+    }
+
+    .site-footer {
+      position: relative;
+      z-index: 7;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      max-width: 1180px;
+      margin: 6rem auto 0;
+      color: rgba(224, 224, 224, 0.42);
+      font: 0.62rem/1.6 Montserrat, "Helvetica Neue", Arial, sans-serif;
+      letter-spacing: 0.16em;
+    }
+
+    .social-row {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .social-row span {
+      display: grid;
+      place-items: center;
+      width: 1.6rem;
+      height: 1.6rem;
+      border: 1px solid rgba(224, 224, 224, 0.24);
+      border-radius: 50%;
+    }
+
+    .site>section:not(.hero) {
+      margin-top: clamp(-7rem, -7vw, -3rem);
+    }
+
+    .hero {
+      padding-bottom: clamp(4.5rem, 7vw, 6rem);
+    }
+
+    .sound,
+    .eye,
+    .channel,
+    .log {
+      min-height: auto;
+      isolation: isolate;
+    }
+
+    .sound {
+      padding: clamp(7rem, 9vw, 9rem) 4rem clamp(7rem, 9vw, 10rem);
+    }
+
+    .eye {
+      padding: clamp(7rem, 8vw, 8.5rem) 4rem clamp(6.5rem, 8vw, 9rem);
+    }
+
+    .channel {
+      padding: clamp(6.5rem, 8vw, 8rem) 4rem clamp(7rem, 8vw, 9.5rem);
+    }
+
+    .log {
+      padding: clamp(6.5rem, 8vw, 8rem) 4rem 5rem;
+    }
+
+    .sound-frame,
+    .eye-frame,
+    .channel-frame,
+    .log-frame {
+      position: relative;
+    }
+
+    .sound-frame::after,
+    .eye-frame::before,
+    .channel-frame::after,
+    .log-frame::before {
+      content: "";
+      pointer-events: none;
+      position: absolute;
+      z-index: -1;
+      border-radius: 50%;
+      background:
+        radial-gradient(ellipse at 50% 50%, rgba(224, 224, 224, 0.1), transparent 54%),
+        radial-gradient(ellipse at 52% 42%, rgba(185, 148, 50, 0.08), transparent 62%);
+      filter: blur(22px);
+      mix-blend-mode: screen;
+    }
+
+    .sound-frame::after {
+      right: 7%;
+      top: 8%;
+      width: 38rem;
+      height: 22rem;
+      transform: rotate(-8deg);
+    }
+
+    .eye-frame::before {
+      left: 17%;
+      top: 6rem;
+      width: 32rem;
+      height: 18rem;
+      transform: rotate(9deg);
+    }
+
+    .channel-frame::after {
+      left: 23%;
+      top: 5rem;
+      width: 36rem;
+      height: 18rem;
+      transform: rotate(-4deg);
+    }
+
+    .log-frame::before {
+      right: 9%;
+      top: 4rem;
+      width: 34rem;
+      height: 20rem;
+      transform: rotate(6deg);
+    }
+
+    .sound-frame {
+      min-height: clamp(29rem, 39vw, 34rem);
+    }
+
+    .sound-stage {
+      margin-top: clamp(3rem, 5vw, 4.5rem);
+    }
+
+    .track-index {
+      margin-top: clamp(3.2rem, 5vw, 4.8rem);
+    }
+
+    .eye-frame {
+      min-height: clamp(36rem, 45vw, 41rem);
+    }
+
+    .channel-board {
+      min-height: clamp(34rem, 42vw, 39rem);
+    }
+
+    .log-frame {
+      min-height: clamp(36rem, 43vw, 40rem);
+    }
+
+    .scrapbook {
+      min-height: clamp(34rem, 42vw, 39rem);
+    }
+
+    .news-block {
+      margin-top: clamp(3.5rem, 5vw, 4.8rem);
+      padding-top: 1.6rem;
+    }
+
+    .site-footer {
+      margin-top: clamp(3rem, 5vw, 4.5rem);
+    }
+
+    .eye-photo--main {
+      top: 4rem;
+    }
+
+    .eye-photo--low {
+      top: 23rem;
+    }
+
+    .channel-fragments {
+      top: -3.5rem;
+    }
+
+    .paper-photo {
+      top: 4rem;
+    }
+
+    .paper-note {
+      top: 1rem;
+    }
+
+    .hero {
+      min-height: 100svh;
+      padding: 4rem 4rem 3.5rem;
+      background:
+        radial-gradient(ellipse at 56% 38%, rgba(224, 224, 224, 0.12), transparent 22rem),
+        radial-gradient(ellipse at 42% 42%, rgba(255, 255, 255, 0.08), transparent 26rem),
+        radial-gradient(circle at 18% 18%, rgba(185, 148, 50, 0.11), transparent 18rem);
+    }
+
+    .hero::before {
+      left: 34%;
+      top: 11%;
+      width: 34rem;
+      height: 36rem;
+      border-radius: 0;
+      background:
+        radial-gradient(ellipse at 52% 42%, rgba(224, 224, 224, 0.18), transparent 46%),
+        radial-gradient(ellipse at 48% 58%, rgba(224, 224, 224, 0.1), transparent 44%);
+      filter: blur(20px);
+      opacity: 0.72;
+      mix-blend-mode: screen;
+    }
+
+    .hero::after {
+      right: 20%;
+      top: 8%;
+      width: 26rem;
+      height: 20rem;
+      border-radius: 50%;
+      opacity: 0.26;
+      background:
+        radial-gradient(circle at 34% 38%, rgba(255, 255, 255, 0.18), transparent 42%),
+        repeating-radial-gradient(circle at 50% 50%, transparent 0 10px, rgba(224, 224, 224, 0.06) 11px 12px);
+      filter: blur(7px);
+    }
+
+    .hero-grid {
+      grid-template-columns: 0.8fr 1.25fr 0.62fr;
+      gap: 1.8rem;
+      max-width: 1240px;
+      min-height: 72svh;
+    }
+
+    .hero-copy-block {
+      position: relative;
+      z-index: 15;
+      align-self: center;
+      padding-top: 5.6rem;
+    }
+
+    .hero-copy-block .eyebrow {
+      display: none;
+    }
+
+    .hero-title {
+      position: absolute;
+      left: -100vw;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+    }
+
+    .hero-script {
+      position: relative;
+      z-index: 20;
+      width: min(66vw, 62rem);
+      max-width: none;
+      margin: 0 0 0 -1.6rem;
+      transform: rotate(-4.5deg);
+      filter:
+        drop-shadow(0 0 10px rgba(185, 148, 50, 0.2)) drop-shadow(0 0 28px rgba(185, 148, 50, 0.12));
+    }
+
+    .hero-script::before {
+      display: none;
+    }
+
+    .hero-script::after {
+      display: none;
+    }
+
+    .hero-script img {
+      width: 100%;
+      height: auto;
+      display: block;
+      mix-blend-mode: screen;
+    }
+
+    .hero-copy {
+      max-width: 24rem;
+      margin: 1.1rem 0 0 0.2rem;
+      color: rgba(224, 224, 224, 0.74);
+      font-size: 0.78rem;
+      line-height: 2.25;
+      letter-spacing: 0.24em;
+    }
+
+    .hero-now {
+      position: relative;
+      z-index: 18;
+      width: min(100%, 37rem);
+      margin-top: 3.15rem;
+      padding: 0.2rem 0 0.1rem;
+      isolation: isolate;
+    }
+
+    .hero-now::before {
+      content: "";
+      pointer-events: none;
+      position: absolute;
+      inset: -2.6rem -3.2rem -1.8rem -1.2rem;
+      z-index: -1;
+      opacity: 0.48;
+      background:
+        radial-gradient(circle at 92% 38%, rgba(185, 148, 50, 0.78) 0 2px, transparent 3px),
+        radial-gradient(circle at 96% 46%, rgba(185, 148, 50, 0.62) 0 5px, transparent 6px),
+        radial-gradient(circle at 88% 62%, rgba(185, 148, 50, 0.7) 0 3px, transparent 4px),
+        radial-gradient(circle at 76% 18%, rgba(185, 148, 50, 0.28) 0 1px, transparent 2px),
+        linear-gradient(90deg, rgba(10, 10, 10, 0.48), rgba(10, 10, 10, 0.1) 72%, transparent);
+      filter: contrast(170%);
+      mix-blend-mode: screen;
+    }
+
+    .hero-now__label,
+    .listen-label {
+      color: var(--rust);
+      font: 700 0.62rem/1 Montserrat, "Helvetica Neue", Arial, sans-serif;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+    }
+
+    .hero-now__en {
+      margin: 1rem 0 0;
+      color: rgba(224, 224, 224, 0.8);
+      font: 700 1.05rem/1.2 Montserrat, "Helvetica Neue", Arial, sans-serif;
+      letter-spacing: 0.06em;
+      text-shadow: 0 0 12px rgba(224, 224, 224, 0.16);
+    }
+
+    .hero-now__jp {
+      margin: 0.55rem 0 1.25rem;
+      color: var(--bone);
+      font-size: clamp(1.35rem, 2.1vw, 1.9rem);
+      line-height: 1.1;
+      letter-spacing: 0.12em;
+      text-shadow: 0 0 18px rgba(224, 224, 224, 0.2);
+    }
+
+    .hero-audio-row {
+      display: grid;
+      grid-template-columns: 4.1rem minmax(0, 1fr);
+      align-items: center;
+      gap: 1.25rem;
+      width: min(100%, 35rem);
+      margin-top: 0.2rem;
+    }
+
+    .hero-play {
+      position: relative;
+      display: grid;
+      place-items: center;
+      width: 4.1rem;
+      height: 4.1rem;
+      padding: 0 0 0 0.18rem;
+      border: 1px solid rgba(224, 224, 224, 0.58);
+      border-radius: 50%;
+      color: rgba(224, 224, 224, 0.94);
+      background: rgba(0, 0, 0, 0.08);
+      box-shadow:
+        0 0 0 1px rgba(10, 10, 10, 0.56) inset,
+        0 0 24px rgba(224, 224, 224, 0.08);
+      font: 1.25rem/1 Montserrat, "Helvetica Neue", Arial, sans-serif;
+      cursor: pointer;
+      transition: border-color 180ms ease, color 180ms ease, transform 180ms ease;
+    }
+
+    .hero-play::after {
+      content: "";
+      position: absolute;
+      inset: -0.45rem;
+      border-radius: 50%;
+      border: 1px solid rgba(185, 148, 50, 0.12);
+      opacity: 0.85;
+    }
+
+    .hero-play:hover {
+      color: var(--rust);
+      border-color: rgba(185, 148, 50, 0.74);
+      transform: scale(1.04);
+    }
+
+    .hero-listen {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem 1.85rem;
+      margin-top: 1.15rem;
+      color: rgba(224, 224, 224, 0.64);
+      font: 0.76rem/1 Montserrat, "Helvetica Neue", Arial, sans-serif;
+      letter-spacing: 0.04em;
+    }
+
+    .hero-listen span::before {
+      content: "◉";
+      display: inline-block;
+      min-width: 1.1rem;
+      margin-right: 0.52rem;
+      color: rgba(224, 224, 224, 0.82);
+      font-size: 0.82rem;
+      line-height: 1;
+      vertical-align: -0.03rem;
+    }
+
+    .hero-listen span:nth-child(2)::before {
+      content: "♪";
+      font-size: 1rem;
+    }
+
+    .hero-listen span:nth-child(3)::before {
+      content: "▶";
+      font-size: 0.78rem;
+    }
+
+    .hero-now .waveform {
+      position: relative;
+      display: flex;
+      align-items: center;
+      height: 5.2rem;
+      margin: 0;
+      overflow: hidden;
+      opacity: 0.82;
+      -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 92%, transparent);
+      mask-image: linear-gradient(90deg, transparent, #000 7%, #000 92%, transparent);
+    }
+
+    .hero-now .waveform::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 50%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(224, 224, 224, 0.3), transparent);
+    }
+
+    .hero-now .waveform span {
+      position: relative;
+      width: 3px;
+      margin-right: 5px;
+      background:
+        linear-gradient(180deg, transparent, rgba(224, 224, 224, 0.78) 48%, rgba(224, 224, 224, 0.34) 52%, transparent);
+      box-shadow:
+        0 0 10px rgba(224, 224, 224, 0.22),
+        9px 0 0 rgba(224, 224, 224, 0.08);
+      filter: blur(0.35px);
+      transform-origin: 50% 50%;
+      animation: waveform-breathe 2.8s ease-in-out infinite alternate;
+      animation-delay: calc(var(--wave-index, 1) * -90ms);
+    }
+
+    .hero-now .waveform span:nth-child(3n) {
+      --wave-index: 4;
+    }
+
+    .hero-now .waveform span:nth-child(4n) {
+      --wave-index: 8;
+    }
+
+    .hero-now .waveform span:nth-child(5n) {
+      --wave-index: 12;
+    }
+
+    @keyframes waveform-breathe {
+      0% {
+        opacity: 0.45;
+        transform: scaleY(0.72);
+      }
+
+      100% {
+        opacity: 0.86;
+        transform: scaleY(1.08);
+      }
+    }
+
+    .portrait {
+      grid-column: 2;
+      justify-self: center;
+      width: min(43vw, 37rem);
+      height: min(47rem, 76svh);
+      min-height: 35rem;
+      margin-left: -3rem;
+      mix-blend-mode: screen;
+    }
+
+    .portrait::before {
+      inset: 0 8% 6%;
+      background:
+        radial-gradient(ellipse at 50% 42%, rgba(224, 224, 224, 0.16), transparent 48%),
+        radial-gradient(ellipse at 46% 68%, rgba(185, 148, 50, 0.12), transparent 48%);
+      filter: blur(26px);
+    }
+
+    .portrait img {
+      object-position: 42% 48%;
+      opacity: 0.5;
+      filter: grayscale(1) contrast(1.28) brightness(0.62);
+      mix-blend-mode: luminosity;
+      -webkit-mask-image: radial-gradient(ellipse at 44% 45%, #000 0 38%, rgba(0, 0, 0, 0.72) 54%, transparent 78%);
+      mask-image: radial-gradient(ellipse at 44% 45%, #000 0 38%, rgba(0, 0, 0, 0.72) 54%, transparent 78%);
+    }
+
+    .portrait__shade {
+      background:
+        radial-gradient(ellipse at 42% 42%, transparent 0 28%, rgba(10, 10, 10, 0.22) 52%, var(--abyss) 80%),
+        linear-gradient(to top, var(--abyss), rgba(10, 10, 10, 0.18), transparent);
+    }
+
+    .portrait__chip-a {
+      left: auto;
+      right: 1rem;
+      top: 10%;
+      width: 6rem;
+      height: 13rem;
+      opacity: 0.28;
+      border-color: rgba(224, 224, 224, 0.24);
+      background: linear-gradient(rgba(224, 224, 224, 0.16), transparent);
+    }
+
+    .portrait__chip-b {
+      right: 8%;
+      bottom: 15%;
+      width: 16rem;
+      height: 9rem;
+      opacity: 0.16;
+      border-color: rgba(224, 224, 224, 0.18);
+      background: radial-gradient(ellipse at 50% 50%, rgba(224, 224, 224, 0.2), transparent 68%);
+    }
+
+    .hero-side-copy {
+      position: relative;
+      z-index: 16;
+      align-self: center;
+      max-width: 18rem;
+      color: rgba(224, 224, 224, 0.7);
+      font-size: 0.82rem;
+      line-height: 2.2;
+      letter-spacing: 0.2em;
+    }
+
+    .hero-side-video {
+      position: absolute;
+      right: 8%;
+      bottom: 9%;
+      z-index: 16;
+      width: 17rem;
+      overflow: hidden;
+      border: 1px solid rgba(224, 224, 224, 0.12);
+      box-shadow: 0 24px 72px rgba(0, 0, 0, 0.58);
+    }
+
+    .hero-side-video img {
+      width: 100%;
+      aspect-ratio: 2.25;
+      object-fit: cover;
+      filter: saturate(0.72) contrast(1.12) brightness(0.7);
+    }
+
+    .hero-side-video::after {
+      content: "▶";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      display: grid;
+      place-items: center;
+      width: 2.8rem;
+      height: 2.8rem;
+      border: 1px solid rgba(224, 224, 224, 0.64);
+      border-radius: 50%;
+      color: rgba(224, 224, 224, 0.8);
+      font-size: 0.68rem;
+      transform: translate(-50%, -50%);
+    }
+
+    .shard-a {
+      left: 31%;
+      top: 8%;
+      width: 13rem;
+      height: 8rem;
+      transform: rotate(1deg);
+    }
+
+    .shard-b {
+      right: 19%;
+      top: 8%;
+      width: 15rem;
+      height: 10rem;
+      transform: rotate(2deg);
+    }
+
+    .shard-c {
+      right: 10%;
+      top: 22%;
+      bottom: auto;
+      width: 7rem;
+      height: 12rem;
+      transform: rotate(-1deg);
+      filter: grayscale(0.75) contrast(1.2) brightness(0.55);
+    }
+
+    .shard-d {
+      left: 49%;
+      bottom: 9%;
+      width: 12rem;
+      height: 8rem;
+      transform: rotate(-4deg);
+      opacity: 0.55;
+    }
+
+    .scratch-a {
+      left: 18%;
+      top: 33%;
+      width: 26rem;
+      height: 10rem;
+      opacity: 0.68;
+    }
+
+    .scratch-b {
+      right: 28%;
+      top: 12%;
+      width: 16rem;
+      height: 16rem;
+      opacity: 0.18;
+    }
+
+    .wave-row {
+      display: none;
+    }
+
+    .splash-hero-a {
+      left: 3%;
+      top: 4%;
+      transform: rotate(-12deg) scale(0.9);
+      opacity: 0.28;
+    }
+
+    .splash-hero-b {
+      right: 13%;
+      top: 2.5rem;
+      transform: rotate(15deg) scale(0.72);
+      opacity: 0.22;
+    }
+
+    .gallery-chaos,
+    .sound-photo-stack,
+    .channel-board,
+    .scrapbook {
+      transform-style: preserve-3d;
+    }
+
+    .sound-photo-stack figure:nth-child(1),
+    .eye-photo--small,
+    .channel-fragments figure:nth-child(1),
+    .paper-small {
+      opacity: 0.76;
+      filter: blur(0.2px);
+    }
+
+    .sound-photo-stack figure:nth-child(2),
+    .eye-photo--main,
+    .video-window,
+    .paper-note {
+      z-index: 8;
+      filter: drop-shadow(0 34px 70px rgba(0, 0, 0, 0.46));
+    }
+
+    .eye-photo--left,
+    .sound-cover,
+    .paper-photo {
+      z-index: 6;
+    }
+
+    .eye-photo--mid,
+    .channel-fragments figure:nth-child(3),
+    .paper-bird {
+      z-index: 9;
+    }
+
+    .eye-photo--tall,
+    .channel-fragments figure:nth-child(2) {
+      z-index: 4;
+      opacity: 0.84;
+    }
+
+    .sound-stage {
+      position: relative;
+      max-width: 1180px;
+      min-height: 43rem;
+      margin: clamp(2.4rem, 4vw, 4rem) auto 0;
+      padding: 3.2rem 0 4.4rem;
+      border-top: 1px solid rgba(185, 148, 50, 0.14);
+      border-bottom: 1px solid rgba(185, 148, 50, 0.08);
+      isolation: isolate;
+    }
+
+    .sound-stage::before {
+      content: "";
+      position: absolute;
+      inset: -5rem 10% auto 16%;
+      z-index: 0;
+      height: 24rem;
+      opacity: 0.42;
+      background:
+        radial-gradient(ellipse at 48% 48%, rgba(224, 224, 224, 0.16), transparent 45%),
+        radial-gradient(ellipse at 56% 34%, rgba(185, 148, 50, 0.1), transparent 42%);
+      filter: blur(22px);
+      mix-blend-mode: screen;
+    }
+
+    .sound-stage::after {
+      content: "";
+      position: absolute;
+      left: -4%;
+      right: -2%;
+      top: 43%;
+      z-index: 1;
+      height: 10rem;
+      opacity: 0.24;
+      background:
+        linear-gradient(90deg, transparent, rgba(185, 148, 50, 0.34), transparent),
+        repeating-linear-gradient(90deg, transparent 0 8px, rgba(224, 224, 224, 0.44) 9px 10px, transparent 11px 16px),
+        repeating-linear-gradient(0deg, transparent 0 7px, rgba(255, 0, 51, 0.16) 8px 8.5px);
+      transform: rotate(-4deg);
+      -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+      mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+    }
+
+    .sound-stage-mark {
+      position: relative;
+      z-index: 4;
+      margin: 0 0 2rem 7%;
+      color: rgba(185, 148, 50, 0.82);
+      font: 0.58rem/1 Montserrat, "Helvetica Neue", Arial, sans-serif;
+      letter-spacing: 0.38em;
+      text-transform: uppercase;
+    }
+
+    .sound-stage-mark::after {
+      content: "";
+      display: inline-block;
+      width: 5rem;
+      height: 1px;
+      margin-left: 1rem;
+      vertical-align: middle;
+      background: rgba(185, 148, 50, 0.72);
+    }
+
+    .sound-stage-ghost {
+      pointer-events: none;
+      position: absolute;
+      inset: 1.5rem 0 auto auto;
+      z-index: 1;
+      width: min(42vw, 30rem);
+      height: 20rem;
+      overflow: hidden;
+      opacity: 0.23;
+      transform: rotate(3deg);
+    }
+
+    .sound-stage-ghost img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(1) contrast(1.35) brightness(0.52);
+      -webkit-mask-image: radial-gradient(ellipse at 50% 48%, #000 0 42%, transparent 76%);
+      mask-image: radial-gradient(ellipse at 50% 48%, #000 0 42%, transparent 76%);
+    }
+
+    .sound-stage .lyric-noise {
+      inset: 0 -6rem auto;
+      height: 22rem;
+      z-index: 2;
+      color: rgba(224, 224, 224, 0.055);
+      font-size: clamp(1rem, 1.8vw, 1.8rem);
+    }
+
+    .sound-stage .lyric-noise span:nth-child(2) {
+      color: rgba(185, 148, 50, 0.11);
+    }
+
+    .sound-collage {
+      pointer-events: none;
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      transform-style: preserve-3d;
+    }
+
+    .sound-collage__photo,
+    .sound-collage__ring,
+    .sound-collage__scratch,
+    .sound-collage__gold {
+      position: absolute;
+      display: block;
+    }
+
+    .sound-collage__photo {
+      overflow: hidden;
+      background: #060606;
+      border: 1px solid rgba(185, 148, 50, 0.12);
+      box-shadow: 0 28px 78px rgba(0, 0, 0, 0.58);
+    }
+
+    .sound-collage__photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: saturate(0.58) contrast(1.22) brightness(0.58);
+    }
+
+    .sound-collage__photo::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      opacity: 0.22;
+      background:
+        linear-gradient(90deg, transparent 0 36%, rgba(255, 0, 51, 0.26) 37% 38%, transparent 39%),
+        repeating-linear-gradient(0deg, transparent 0 6px, rgba(224, 224, 224, 0.18) 7px 7.5px);
+      mix-blend-mode: screen;
+    }
+
+    .sound-collage__photo--a {
+      left: -1.5rem;
+      top: 5.5rem;
+      z-index: 2;
+      width: 13rem;
+      height: 8.2rem;
+      transform: rotate(-7deg) translateZ(-40px);
+      opacity: 0.72;
+    }
+
+    .sound-collage__photo--b {
+      right: 3%;
+      top: 2.4rem;
+      z-index: 8;
+      width: 16rem;
+      height: 10rem;
+      transform: rotate(5deg) translateZ(50px);
+    }
+
+    .sound-collage__photo--c {
+      left: 50%;
+      bottom: 0.4rem;
+      z-index: 7;
+      width: 18rem;
+      height: 11rem;
+      transform: translateX(-8%) rotate(-4deg) translateZ(42px);
+      opacity: 0.82;
+    }
+
+    .sound-collage__photo--d {
+      right: 12%;
+      bottom: 8.2rem;
+      z-index: 2;
+      width: 9rem;
+      height: 12rem;
+      transform: rotate(8deg) translateZ(-20px);
+      opacity: 0.58;
+    }
+
+    .sound-collage__ring {
+      border: 1px solid rgba(224, 224, 224, 0.18);
+      border-radius: 50%;
+      mix-blend-mode: screen;
+    }
+
+    .sound-collage__ring--a {
+      left: 11%;
+      top: 13rem;
+      width: 25rem;
+      height: 9rem;
+      transform: rotate(-13deg);
+      opacity: 0.38;
+    }
+
+    .sound-collage__ring--b {
+      right: 2%;
+      bottom: 4rem;
+      width: 18rem;
+      height: 18rem;
+      transform: rotate(18deg);
+      opacity: 0.2;
+    }
+
+    .sound-collage__scratch {
+      left: 7%;
+      bottom: 5rem;
+      width: 28rem;
+      height: 7rem;
+      opacity: 0.24;
+      background:
+        radial-gradient(ellipse at 50% 50%, transparent 0 44%, rgba(224, 224, 224, 0.7) 44.3% 44.7%, transparent 45%),
+        linear-gradient(104deg, transparent 0 48%, rgba(255, 0, 51, 0.36) 49%, transparent 50%);
+      transform: rotate(-9deg);
+      mix-blend-mode: screen;
+    }
+
+    .sound-collage__gold {
+      right: -2rem;
+      top: 10rem;
+      width: 20rem;
+      height: 18rem;
+      opacity: 0.78;
+      background:
+        radial-gradient(circle at 10% 18%, rgba(185, 148, 50, 0.9) 0 2px, transparent 3px),
+        radial-gradient(circle at 18% 28%, rgba(185, 148, 50, 0.7) 0 4px, transparent 5px),
+        radial-gradient(circle at 42% 34%, rgba(185, 148, 50, 0.85) 0 7px, transparent 8px),
+        radial-gradient(circle at 72% 46%, rgba(185, 148, 50, 0.8) 0 5px, transparent 6px),
+        radial-gradient(circle at 81% 82%, rgba(185, 148, 50, 0.75) 0 8px, transparent 9px);
+      filter: contrast(150%);
+      mix-blend-mode: screen;
+      transform: rotate(12deg);
+    }
+
+    .embed-chaos {
+      position: relative;
+      z-index: 6;
+      display: grid;
+      grid-template-columns: 0.1fr 0.78fr 0.12fr;
+      gap: 0;
+      width: min(100%, 64rem);
+      margin: 4.4rem 0 0 8%;
+    }
+
+    .embed-chaos .spotify-shell {
+      position: relative;
+      inset: auto;
+      width: 100%;
+      min-height: 116px;
+      padding: 0.95rem 1.1rem 1rem;
+      border: 0;
+      border-top: 1px solid rgba(224, 224, 224, 0.15);
+      border-bottom: 1px solid rgba(224, 224, 224, 0.05);
+      background:
+        linear-gradient(90deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.22) 62%, transparent),
+        linear-gradient(90deg, rgba(185, 148, 50, 0.1), transparent 26%);
+      box-shadow: none;
+      backdrop-filter: none;
+    }
+
+    .embed-chaos .spotify-shell::before {
+      inset: auto 12% -1px 0;
+      height: 1px;
+      border: 0;
+      background: linear-gradient(90deg, rgba(185, 148, 50, 0.76), transparent);
+      transform: none;
+    }
+
+    .embed-chaos .spotify-shell::after {
+      inset: 0 auto 0 0;
+      width: 0.3rem;
+      opacity: 0.72;
+      background: var(--rust);
+      mix-blend-mode: screen;
+    }
+
+    .embed-chaos .spotify-shell:nth-child(1) {
+      grid-column: 1 / 3;
+      transform: rotate(-1.1deg);
+    }
+
+    .embed-chaos .spotify-shell:nth-child(2) {
+      grid-column: 2 / 4;
+      margin-top: -0.4rem;
+      transform: rotate(0.8deg) translateX(2.4rem);
+    }
+
+    .embed-chaos .spotify-shell:nth-child(3) {
+      grid-column: 1 / 3;
+      margin-top: -0.2rem;
+      transform: rotate(-0.5deg) translateX(4.8rem);
+    }
+
+    .embed-chaos .spotify-shell:nth-child(4) {
+      grid-column: 2 / 4;
+      margin-top: -0.6rem;
+      transform: rotate(1deg);
+    }
+
+    .embed-chaos .player-meta {
+      align-items: baseline;
+    }
+
+    .embed-chaos .player-num {
+      color: var(--rust);
+      letter-spacing: 0.24em;
+    }
+
+    .embed-chaos .player-note {
+      color: rgba(224, 224, 224, 0.32);
+      letter-spacing: 0.28em;
+    }
+
+    .embed-chaos .player-title {
+      margin: 0.85rem 0 0;
+      color: rgba(224, 224, 224, 0.84);
+      font-size: clamp(1.1rem, 1.8vw, 1.55rem);
+      letter-spacing: 0.12em;
+    }
+
+    .embed-chaos .embed-slot {
+      min-height: 38px;
+      margin-top: 0.55rem;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      grid-template-columns: 2.3rem 1fr;
+    }
+
+    .embed-chaos .play-mark {
+      width: 2.05rem;
+      height: 2.05rem;
+      border-color: rgba(224, 224, 224, 0.34);
+      color: rgba(224, 224, 224, 0.58);
+      font-size: 0.58rem;
+    }
+
+    .embed-chaos .mini-wave {
+      height: 2.25rem;
+      margin: 0;
+      opacity: 0.34;
+    }
+
+    .load-in {
+      opacity: 0;
+    }
+
+    body::before {
+      opacity: 0.22;
+      background-image:
+        linear-gradient(rgba(185, 148, 50, 0.055) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 0, 51, 0.035) 1px, transparent 1px),
+        radial-gradient(circle, rgba(185, 148, 50, 0.18) 0.7px, transparent 0.95px);
+      mix-blend-mode: color-dodge;
+    }
+
+    body::after {
+      opacity: 0.18;
+      background:
+        repeating-radial-gradient(circle at 12% 8%, transparent 0 2px, rgba(185, 148, 50, 0.28) 3px 3.6px),
+        repeating-linear-gradient(115deg, transparent 0 5px, rgba(255, 0, 51, 0.14) 6px 6.5px);
+      mix-blend-mode: hard-light;
+    }
+
+    .ambient-bg {
+      background:
+        radial-gradient(circle at 18% 18%, rgba(185, 148, 50, 0.12), transparent 22rem),
+        radial-gradient(circle at 68% 24%, rgba(255, 0, 51, 0.055), transparent 24rem),
+        radial-gradient(circle at 44% 78%, rgba(185, 148, 50, 0.06), transparent 26rem),
+        var(--abyss);
+    }
+
+    .ambient-bg__smoke {
+      opacity: 0.18;
+      background:
+        radial-gradient(ellipse at 46% 18%, rgba(10, 10, 10, 0.66), transparent 38%),
+        radial-gradient(ellipse at 58% 42%, rgba(185, 148, 50, 0.1), transparent 36%),
+        radial-gradient(ellipse at 28% 64%, rgba(255, 0, 51, 0.08), transparent 32%);
+      filter: blur(28px);
+      mix-blend-mode: multiply;
+    }
+
+    .ambient-bg__scratch {
+      opacity: 0.24;
+      background:
+        radial-gradient(ellipse at 24% 42%, transparent 0 32%, rgba(185, 148, 50, 0.42) 32.2% 32.5%, transparent 32.8%),
+        radial-gradient(ellipse at 74% 64%, transparent 0 36%, rgba(255, 0, 51, 0.22) 36.2% 36.5%, transparent 36.8%);
+      mix-blend-mode: screen;
+    }
+
+    .hero {
+      background:
+        radial-gradient(ellipse at 62% 40%, rgba(10, 10, 10, 0.72), transparent 24rem),
+        radial-gradient(ellipse at 28% 24%, rgba(185, 148, 50, 0.12), transparent 18rem),
+        radial-gradient(circle at 72% 12%, rgba(255, 0, 51, 0.06), transparent 16rem);
+    }
+
+    .hero::before {
+      background:
+        radial-gradient(ellipse at 48% 42%, rgba(10, 10, 10, 0.66), transparent 42%),
+        radial-gradient(ellipse at 54% 58%, rgba(185, 148, 50, 0.12), transparent 48%);
+      opacity: 0.76;
+      filter: blur(22px);
+      mix-blend-mode: multiply;
+    }
+
+    .hero::after {
+      opacity: 0.34;
+      background:
+        radial-gradient(circle at 34% 38%, rgba(185, 148, 50, 0.24), transparent 38%),
+        repeating-radial-gradient(circle at 50% 50%, transparent 0 10px, rgba(185, 148, 50, 0.07) 11px 12px);
+      filter: blur(5px) contrast(150%);
+      mix-blend-mode: screen;
+    }
+
+    .portrait {
+      mix-blend-mode: normal;
+    }
+
+    .portrait::before {
+      background:
+        radial-gradient(ellipse at 52% 42%, rgba(185, 148, 50, 0.12), transparent 48%),
+        radial-gradient(ellipse at 46% 68%, rgba(255, 0, 51, 0.08), transparent 48%);
+      filter: blur(30px);
+    }
+
+    .portrait img {
+      opacity: 0.58;
+      filter: grayscale(0.92) contrast(1.24) brightness(0.58);
+      mix-blend-mode: normal;
+    }
+
+    .portrait__chip-a {
+      border-color: rgba(185, 148, 50, 0.2);
+      background: linear-gradient(rgba(185, 148, 50, 0.12), transparent);
+    }
+
+    .portrait__chip-b {
+      border-color: rgba(255, 0, 51, 0.2);
+      background: radial-gradient(ellipse at 50% 50%, rgba(255, 0, 51, 0.16), transparent 68%);
+    }
+
+    .sound-frame::after,
+    .eye-frame::before,
+    .channel-frame::after,
+    .log-frame::before {
+      background:
+        radial-gradient(ellipse at 50% 50%, rgba(10, 10, 10, 0.44), transparent 54%),
+        radial-gradient(ellipse at 52% 42%, rgba(185, 148, 50, 0.11), transparent 62%);
+      mix-blend-mode: multiply;
+    }
+
+    .sound-stage::before {
+      background:
+        radial-gradient(ellipse at 48% 48%, rgba(10, 10, 10, 0.62), transparent 45%),
+        radial-gradient(ellipse at 56% 34%, rgba(185, 148, 50, 0.12), transparent 42%);
+      mix-blend-mode: multiply;
+    }
+
+    .motion-slice {
+      will-change: transform, opacity, filter, clip-path;
+    }
+
+    .load-in {
+      opacity: 0;
+    }
+
+    @media (max-width: 900px) {
+      body {
+        cursor: auto;
+      }
+
+      .chaos-cta {
+        top: auto;
+        bottom: 0;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        gap: 0.45rem;
+        padding: 0 0.8rem 0.8rem;
+      }
+
+      .chaos-cta__link {
+        position: relative;
+        left: auto;
+        right: auto;
+        top: auto;
+        bottom: auto;
+        min-height: 2.35rem;
+        padding: 0.55rem 0.66rem;
+        font-size: 0.52rem;
+        letter-spacing: 0.14em;
+        background:
+          linear-gradient(90deg, rgba(10, 10, 10, 0.9), rgba(10, 10, 10, 0.58)),
+          linear-gradient(90deg, rgba(185, 148, 50, 0.14), transparent 54%);
+      }
+
+      .chaos-cta__link::before {
+        width: 1.35rem;
+        height: 1.35rem;
+        font-size: 0.62rem;
+      }
+
+      .site>section:not(.hero) {
+        margin-top: -2.5rem;
+      }
+
+      .brand-mark,
+      .side-nav {
+        display: none;
+      }
+
+      .hero {
+        padding: 4.5rem 1.4rem 7rem;
+      }
+
+      .hero-grid,
+      .sound-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-grid {
+        gap: 2.5rem;
+      }
+
+      .hero-copy-block {
+        padding-top: 2rem;
+      }
+
+      .hero-script {
+        width: min(124%, 44rem);
+        margin-left: -0.8rem;
+        transform: rotate(-3.5deg);
+      }
+
+      .hero-copy {
+        margin-top: 0.7rem;
+        font-size: 0.76rem;
+      }
+
+      .hero-now {
+        margin-top: 2.4rem;
+      }
+
+      .portrait {
+        grid-column: auto;
+        width: 100%;
+        min-height: 27rem;
+        height: 30rem;
+        margin-left: 0;
+      }
+
+      .hero-side-copy {
+        max-width: none;
+      }
+
+      .hero-side-video {
+        position: relative;
+        right: auto;
+        bottom: auto;
+        width: 100%;
+        margin-top: 1.5rem;
+      }
+
+      .image-shard {
+        display: none;
+      }
+
+      .wave-row {
+        display: block;
+      }
+
+      .scroll-link {
+        display: none;
+      }
+
+      .sound {
+        padding: 6.5rem 1.4rem 7.5rem;
+      }
+
+      .sound::before {
+        left: -40%;
+        top: 12%;
+        width: 30rem;
+        height: 30rem;
+      }
+
+      .sound-intro {
+        position: relative;
+        top: auto;
+      }
+
+      .sound-frame {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+        min-height: auto;
+      }
+
+      .eye {
+        padding: 6.5rem 1.4rem 7.5rem;
+      }
+
+      .eye-frame {
+        min-height: auto;
+      }
+
+      .eye-sign,
+      .eye-lead,
+      .gallery-chaos,
+      .eye-photo,
+      .photo-caption {
+        position: relative;
+        inset: auto;
+      }
+
+      .eye-sign {
+        margin-bottom: 2.8rem;
+      }
+
+      .eye-lead {
+        max-width: none;
+        margin-bottom: 3rem;
+      }
+
+      .gallery-chaos {
+        display: grid;
+        gap: 1.2rem;
+      }
+
+      .eye-photo,
+      .eye-photo--main,
+      .eye-photo--left,
+      .eye-photo--mid,
+      .eye-photo--low,
+      .eye-photo--small,
+      .eye-photo--tall {
+        width: 100%;
+        height: auto;
+        transform: none;
+      }
+
+      .eye-photo img {
+        aspect-ratio: 1.25;
+      }
+
+      .eye-photo--left img,
+      .eye-photo--tall img {
+        aspect-ratio: 0.82;
+      }
+
+      .photo-caption {
+        margin-top: 2rem;
+      }
+
+      .channel {
+        padding: 6.5rem 1.4rem 7.5rem;
+      }
+
+      .channel-frame {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+
+      .channel-sign {
+        padding-top: 0;
+      }
+
+      .channel-board {
+        min-height: auto;
+      }
+
+      .video-window {
+        width: 100%;
+        margin-left: 0;
+        transform: none;
+      }
+
+      .video-thumbs {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        width: 100%;
+      }
+
+      .channel-fragments {
+        display: none;
+      }
+
+      .channel-note {
+        position: relative;
+        right: auto;
+        bottom: auto;
+        margin-top: 2rem;
+      }
+
+      .log {
+        padding: 6.5rem 1.4rem 3.5rem;
+      }
+
+      .log-frame,
+      .news-block {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+
+      .log-sign {
+        padding-top: 0;
+      }
+
+      .scrapbook {
+        display: grid;
+        gap: 1.2rem;
+        min-height: auto;
+      }
+
+      .paper,
+      .paper-photo,
+      .paper-note,
+      .paper-bird,
+      .paper-small,
+      .botanical-line {
+        position: relative;
+        inset: auto;
+        width: 100%;
+        transform: none;
+      }
+
+      .botanical-line {
+        display: none;
+      }
+
+      .news-list {
+        justify-self: start;
+      }
+
+      .site-footer {
+        display: grid;
+        gap: 1.5rem;
+      }
+
+      .section-sign__num::after {
+        width: 2.4rem;
+      }
+
+      .sound-cover {
+        width: min(82%, 18rem);
+        margin: 0;
+      }
+
+      .sound-code {
+        grid-template-columns: 1fr;
+      }
+
+      .lyric-noise {
+        inset: -2rem -8rem auto;
+        height: 18rem;
+        font-size: 1.1rem;
+      }
+
+      .sound-photo-stack {
+        display: none;
+      }
+
+      .sound-stage {
+        margin-top: 5.5rem;
+      }
+
+      .embed-chaos {
+        grid-template-columns: 1fr;
+        gap: 1.2rem;
+        width: 100%;
+        margin-left: 0;
+      }
+
+      .sound-stage {
+        padding: 2.4rem 0 1.6rem;
+        min-height: auto;
+      }
+
+      .sound-stage-mark {
+        margin-left: 0;
+        line-height: 1.7;
+      }
+
+      .sound-stage-ghost {
+        right: -20%;
+        width: 85%;
+        opacity: 0.16;
+      }
+
+      .embed-chaos .spotify-shell:nth-child(1),
+      .embed-chaos .spotify-shell:nth-child(2),
+      .embed-chaos .spotify-shell:nth-child(3),
+      .embed-chaos .spotify-shell:nth-child(4) {
+        top: auto;
+        margin-top: 0;
+        transform: none;
+      }
+
+      .players {
+        min-height: 62rem;
+      }
+
+      .spotify-shell {
+        left: 0;
+        right: 0;
+        width: 100%;
+        min-height: 186px;
+      }
+
+      .spotify-shell:nth-child(1) {
+        top: 0;
+        transform: rotate(-1.7deg);
+      }
+
+      .spotify-shell:nth-child(2) {
+        top: 14.5rem;
+        transform: rotate(2deg);
+      }
+
+      .spotify-shell:nth-child(3) {
+        top: 29rem;
+        transform: rotate(-1.2deg);
+      }
+
+      .spotify-shell:nth-child(4) {
+        top: 43.5rem;
+        transform: rotate(1.2deg);
+      }
+
+      .track-index {
+        grid-template-columns: 1fr;
+        margin-top: 4rem;
+      }
+
+      .track-row:nth-child(even) {
+        transform: none;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .site>section:not(.hero) {
+        margin-top: clamp(-3.8rem, -9vw, -1.8rem);
+      }
+
+      .hero,
+      .sound,
+      .eye,
+      .channel,
+      .log {
+        overflow: hidden;
+      }
+
+      .hero {
+        min-height: 112svh;
+        padding: 4rem 1.15rem 8rem;
+      }
+
+      .hero-grid {
+        position: relative;
+        display: block;
+        min-height: 47rem;
+      }
+
+      .hero-copy-block {
+        position: relative;
+        z-index: 8;
+        width: min(92%, 28rem);
+        padding-top: 1rem;
+      }
+
+      .hero-script {
+        width: min(138%, 38rem);
+        margin: -0.2rem 0 0 -2.2rem;
+        transform: rotate(-6deg);
+      }
+
+      .hero-copy {
+        width: 82%;
+        margin-top: -0.3rem;
+      }
+
+      .hero-now {
+        width: min(92vw, 24rem);
+        margin-top: 2.2rem;
+        transform: translateX(8vw) rotate(-1.2deg);
+      }
+
+      .portrait {
+        position: absolute;
+        right: -16vw;
+        bottom: 5rem;
+        z-index: 4;
+        width: min(84vw, 25rem);
+        height: 31rem;
+        min-height: 0;
+        transform: rotate(3.2deg);
+      }
+
+      .hero-side-copy {
+        position: absolute;
+        right: 0.6rem;
+        top: 30rem;
+        z-index: 9;
+        width: 12rem;
+        font-size: 0.7rem;
+        transform: rotate(3deg);
+      }
+
+      .hero-side-video {
+        position: absolute;
+        left: -0.6rem;
+        bottom: 0.2rem;
+        z-index: 9;
+        width: min(58vw, 16rem);
+        margin: 0;
+        transform: rotate(-4deg);
+      }
+
+      .image-shard {
+        display: block;
+        z-index: 3;
+        opacity: 0.74;
+      }
+
+      .shard-a {
+        left: 52vw;
+        top: 5.4rem;
+        width: 9.8rem;
+      }
+
+      .shard-b {
+        left: -2.4rem;
+        top: 25.5rem;
+        width: 8.8rem;
+      }
+
+      .shard-c {
+        right: -3rem;
+        top: 20.5rem;
+        width: 8.4rem;
+      }
+
+      .shard-d {
+        display: none;
+      }
+
+      .sound {
+        padding: 7.5rem 1.15rem 7rem;
+      }
+
+      .sound-frame {
+        display: block;
+        min-height: 45rem;
+      }
+
+      .sound-frame .section-sign {
+        position: absolute;
+        left: 0.15rem;
+        top: 0;
+        width: 13.8rem;
+        transform: rotate(-1.6deg);
+      }
+
+      .sound-cover {
+        position: absolute;
+        left: 34vw;
+        top: 6.2rem;
+        width: min(52vw, 13rem);
+        transform: rotate(5deg);
+      }
+
+      .playlist-panel {
+        position: absolute;
+        left: 8vw;
+        top: 22.4rem;
+        z-index: 9;
+        width: min(78vw, 22rem);
+        padding: 1rem 0 1rem 1.1rem;
+        background: linear-gradient(90deg, rgba(10, 10, 10, 0.82), rgba(10, 10, 10, 0.28), transparent);
+        transform: rotate(-2deg);
+      }
+
+      .sound-photo-stack {
+        display: block;
+        right: -7vw;
+        bottom: 0.5rem;
+        width: 84vw;
+        min-height: 17rem;
+      }
+
+      .sound-photo-stack figure:nth-child(1) {
+        right: 46%;
+        top: 0.5rem;
+        width: 9rem;
+        height: 6.4rem;
+        transform: rotate(-7deg);
+      }
+
+      .sound-photo-stack figure:nth-child(2) {
+        right: 4%;
+        top: 3.6rem;
+        width: 14rem;
+        height: 8.8rem;
+        transform: rotate(5deg);
+      }
+
+      .sound-photo-stack figure:nth-child(3) {
+        right: 34%;
+        top: 10rem;
+        width: 11rem;
+        height: 7rem;
+        transform: rotate(-3deg);
+      }
+
+      .sound-stage {
+        margin-top: 1.6rem;
+        min-height: 54rem;
+        padding: 3.2rem 0 2.6rem;
+      }
+
+      .sound-stage-mark {
+        margin-left: 8vw;
+        transform: rotate(-2deg);
+      }
+
+      .sound-collage__photo--a {
+        left: -5vw;
+        top: 8.2rem;
+        width: 42vw;
+        height: 7.2rem;
+        transform: rotate(-8deg);
+      }
+
+      .sound-collage__photo--b {
+        right: -9vw;
+        top: 4.6rem;
+        width: 54vw;
+        height: 8.2rem;
+        transform: rotate(6deg);
+      }
+
+      .sound-collage__photo--c {
+        left: 22vw;
+        bottom: 4rem;
+        width: 62vw;
+        height: 9rem;
+        transform: rotate(-5deg);
+      }
+
+      .sound-collage__photo--d {
+        right: -2vw;
+        bottom: 17rem;
+        width: 32vw;
+        height: 10.5rem;
+        transform: rotate(7deg);
+      }
+
+      .sound-collage__ring--a {
+        left: -18vw;
+        top: 20rem;
+        width: 78vw;
+        height: 8rem;
+      }
+
+      .sound-collage__ring--b {
+        right: -24vw;
+        bottom: 9rem;
+        width: 62vw;
+        height: 62vw;
+      }
+
+      .sound-collage__scratch {
+        left: -20vw;
+        bottom: 11rem;
+        width: 90vw;
+      }
+
+      .sound-collage__gold {
+        right: -22vw;
+        top: 15rem;
+        width: 64vw;
+      }
+
+      .embed-chaos {
+        display: block;
+        width: 100%;
+        margin: 6rem 0 0;
+      }
+
+      .embed-chaos .spotify-shell {
+        width: min(94vw, 27rem);
+      }
+
+      .embed-chaos .spotify-shell:nth-child(1) {
+        margin-left: 0;
+        transform: rotate(-2.5deg) translateY(0.4rem);
+      }
+
+      .embed-chaos .spotify-shell:nth-child(2) {
+        margin: -0.2rem 0 0 auto;
+        transform: rotate(2.2deg) translateX(0.4rem);
+      }
+
+      .embed-chaos .spotify-shell:nth-child(3) {
+        margin: -0.15rem auto 0 6vw;
+        transform: rotate(-1.6deg) translateX(0);
+      }
+
+      .embed-chaos .spotify-shell:nth-child(4) {
+        margin: -0.3rem 0 0 auto;
+        transform: rotate(1.8deg) translateX(-4vw);
+      }
+
+      .track-index {
+        width: 94%;
+        margin-top: 3.2rem;
+      }
+
+      .track-row:nth-child(even) {
+        transform: translateX(7vw) rotate(0.5deg);
+      }
+
+      .track-row:nth-child(3n) {
+        transform: translateX(-3vw) rotate(-0.7deg);
+      }
+
+      .eye {
+        padding: 7rem 1.15rem 7.4rem;
+      }
+
+      .eye-frame {
+        min-height: 62rem;
+      }
+
+      .eye-sign {
+        position: absolute;
+        left: 49vw;
+        top: 0;
+        z-index: 12;
+        width: 12rem;
+        margin: 0;
+        transform: rotate(2.4deg);
+      }
+
+      .eye-lead {
+        position: absolute;
+        left: 0.2rem;
+        top: 8.2rem;
+        z-index: 12;
+        width: min(70vw, 20rem);
+        margin: 0;
+        font-size: 0.74rem;
+        transform: rotate(-1.5deg);
+      }
+
+      .gallery-chaos {
+        position: absolute;
+        inset: 0;
+        display: block;
+      }
+
+      .eye-photo,
+      .eye-photo--main,
+      .eye-photo--left,
+      .eye-photo--mid,
+      .eye-photo--low,
+      .eye-photo--small,
+      .eye-photo--tall {
+        position: absolute;
+        height: auto;
+      }
+
+      .eye-photo img {
+        height: 100%;
+        aspect-ratio: auto;
+      }
+
+      .eye-photo--left {
+        left: -3vw;
+        top: 17rem;
+        width: 42vw;
+        height: 18rem;
+        transform: rotate(-6deg);
+      }
+
+      .eye-photo--main {
+        right: -12vw;
+        top: 15rem;
+        width: 74vw;
+        height: 15rem;
+        transform: rotate(3deg);
+      }
+
+      .eye-photo--mid {
+        left: 28vw;
+        top: 30rem;
+        z-index: 10;
+        width: 56vw;
+        height: 10rem;
+        transform: rotate(-2deg);
+      }
+
+      .eye-photo--low {
+        left: -8vw;
+        top: 39rem;
+        width: 76vw;
+        height: 13rem;
+        transform: rotate(4.5deg);
+      }
+
+      .eye-photo--small {
+        right: -4vw;
+        top: 48rem;
+        width: 38vw;
+        height: 8rem;
+        transform: rotate(-7deg);
+      }
+
+      .eye-photo--tall {
+        right: 18vw;
+        top: 54rem;
+        width: 26vw;
+        height: 11rem;
+        transform: rotate(6deg);
+      }
+
+      .photo-caption {
+        position: absolute;
+        left: 0.4rem;
+        bottom: 0;
+        width: 82%;
+        margin: 0;
+        transform: rotate(-1.4deg);
+      }
+
+      .channel {
+        padding: 7rem 1.15rem 7rem;
+      }
+
+      .channel-frame {
+        display: block;
+      }
+
+      .channel-sign {
+        position: relative;
+        z-index: 11;
+        width: 15rem;
+        transform: rotate(-2deg);
+      }
+
+      .channel-board {
+        min-height: 42rem;
+        margin-top: -1rem;
+      }
+
+      .video-window {
+        position: absolute;
+        left: -2vw;
+        top: 7.8rem;
+        width: 96vw;
+        margin: 0;
+        transform: rotate(-3deg);
+      }
+
+      .video-thumbs {
+        position: absolute;
+        left: 5vw;
+        top: 22.8rem;
+        z-index: 8;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.65rem;
+        width: 76vw;
+        transform: rotate(2deg);
+      }
+
+      .channel-fragments {
+        display: block;
+        right: -12vw;
+        top: -1.5rem;
+        width: 58vw;
+        height: 27rem;
+        opacity: 0.7;
+      }
+
+      .channel-fragments figure:nth-child(1) {
+        right: 28vw;
+        top: 0;
+        width: 8.5rem;
+        height: 5.7rem;
+      }
+
+      .channel-fragments figure:nth-child(2) {
+        right: 0;
+        top: 10rem;
+        width: 6.7rem;
+        height: 9.8rem;
+      }
+
+      .channel-fragments figure:nth-child(3) {
+        right: 18vw;
+        top: 21rem;
+        width: 9rem;
+        height: 5.8rem;
+      }
+
+      .channel-note {
+        position: absolute;
+        right: 0.4rem;
+        bottom: 0;
+        z-index: 9;
+        width: min(70vw, 19rem);
+        margin: 0;
+        transform: rotate(-1.5deg);
+      }
+
+      .log {
+        padding: 7rem 1.15rem 4rem;
+      }
+
+      .log-frame {
+        display: block;
+        min-height: 48rem;
+      }
+
+      .log-sign {
+        position: relative;
+        z-index: 12;
+        width: 13rem;
+        transform: rotate(2.2deg);
+      }
+
+      .scrapbook {
+        position: relative;
+        display: block;
+        min-height: 40rem;
+        margin-top: -1.4rem;
+      }
+
+      .paper,
+      .paper-photo,
+      .paper-note,
+      .paper-bird,
+      .paper-small {
+        position: absolute;
+        inset: auto;
+        transform-origin: 50% 50%;
+      }
+
+      .paper-photo {
+        left: -3vw;
+        top: 7.2rem;
+        width: 68vw;
+        transform: rotate(-6deg);
+      }
+
+      .paper-note {
+        right: -5vw;
+        top: 1.5rem;
+        z-index: 9;
+        width: 72vw;
+        min-height: 17rem;
+        padding: 1.7rem 1.5rem 1.5rem;
+        transform: rotate(4deg);
+      }
+
+      .paper-bird {
+        right: 8vw;
+        top: 24.5rem;
+        width: 42vw;
+        transform: rotate(-9deg);
+      }
+
+      .paper-small {
+        left: 8vw;
+        top: 28rem;
+        width: 35vw;
+        transform: rotate(8deg);
+      }
+
+      .botanical-line {
+        display: block;
+        right: -12vw;
+        top: 21rem;
+        opacity: 0.22;
+      }
+
+      .news-block {
+        display: block;
+        margin-top: -1.6rem;
+      }
+
+      .news-list {
+        width: 88%;
+        transform: translateX(8vw) rotate(-1deg);
+      }
+    }
+
+    @media (max-width: 520px) {
+      .hero-script {
+        width: 148%;
+      }
+
+      .hero-now {
+        width: min(94vw, 24rem);
+      }
+
+      .hero-now::before {
+        inset: -1.8rem -1rem -1.3rem -0.8rem;
+      }
+
+      .hero-audio-row {
+        grid-template-columns: 3.45rem minmax(0, 1fr);
+        gap: 0.85rem;
+        width: 100%;
+      }
+
+      .hero-play {
+        width: 3.45rem;
+        height: 3.45rem;
+        font-size: 1rem;
+      }
+
+      .hero-now .waveform {
+        height: 4.5rem;
+      }
+
+      .hero-now .waveform span {
+        width: 2px;
+        margin-right: 4px;
+      }
+
+      .hero-listen {
+        gap: 0.85rem 1.15rem;
+        font-size: 0.68rem;
+      }
+
+      .portrait {
+        right: -23vw;
+        width: 92vw;
+      }
+
+      .sound-cover {
+        left: 40vw;
+      }
+
+      .sound-frame .section-sign {
+        width: 12.8rem;
+      }
+
+      .playlist-panel {
+        left: 1vw;
+        width: 88vw;
+      }
+
+      .eye-sign {
+        left: 43vw;
+      }
+
+      .eye-photo--main {
+        width: 82vw;
+      }
+
+      .video-controls {
+        grid-template-columns: auto 1fr auto;
+      }
+
+      .video-controls span:nth-child(4),
+      .video-controls span:nth-child(5) {
+        display: none;
+      }
+
+      .paper-note {
+        width: 78vw;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.001ms !important;
+      }
+
+      .load-in {
+        opacity: 1;
+        transform: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="ambient-bg" aria-hidden="true">
+    <span class="ambient-bg__photo"></span>
+    <span class="ambient-bg__smoke"></span>
+    <span class="ambient-bg__gold"></span>
+    <span class="ambient-bg__scratch"></span>
+  </div>
+
+  <main class="site">
+    <div class="chaos-cta" aria-label="外部リンク">
+      <a class="chaos-cta__link chaos-cta__link--spotify" data-icon="Sp" href="https://open.spotify.com/"
+        target="_blank" rel="noopener">Spotify</a>
+      <a class="chaos-cta__link chaos-cta__link--youtube" data-icon="▶" href="https://www.youtube.com/"
+        target="_blank" rel="noopener">YouTube</a>
+      <a class="chaos-cta__link chaos-cta__link--instagram" data-icon="Ig" href="https://www.instagram.com/"
+        target="_blank" rel="noopener">Instagram</a>
+    </div>
+
+    <a class="brand-mark" href="#hero" aria-label="感豊 トップへ">
+      <span class="brand-mark__jp">感豊</span>
+      <span class="brand-mark__en">kan yutaka</span>
+    </a>
+
+    <nav class="side-nav" aria-label="ページ内メニュー">
+      <div class="side-nav__title">Menu</div>
+      <a href="#sound">
+        <span class="side-nav__num">01</span><span class="side-nav__label">SOUND</span>
+        <span class="side-nav__sub">音楽活動</span>
+      </a>
+      <a href="#eye">
+        <span class="side-nav__num">02</span><span class="side-nav__label">EYE</span>
+        <span class="side-nav__sub">写真作品</span>
+      </a>
+      <a href="#channel">
+        <span class="side-nav__num">03</span><span class="side-nav__label">CHANNEL</span>
+        <span class="side-nav__sub">映像</span>
+      </a>
+      <a href="#log">
+        <span class="side-nav__num">04</span><span class="side-nav__label">LOG</span>
+        <span class="side-nav__sub">創作・思考</span>
+      </a>
+    </nav>
+
+    <section id="hero" class="hero">
+      <div class="gold-splash splash-hero-a" aria-hidden="true"></div>
+      <div class="gold-splash splash-hero-b" aria-hidden="true"></div>
+      <div class="ink-scratch scratch-a" aria-hidden="true"></div>
+      <div class="ink-scratch scratch-b" aria-hidden="true"></div>
+
+      <figure class="image-shard shard-a parallax" data-speed="-0.18">
+        <img src="img/work/work25.jpg" alt="作品写真 海辺の断片" decoding="async" fetchpriority="low" />
+      </figure>
+      <figure class="image-shard shard-b parallax" data-speed="-0.28">
+        <img src="img/work/work33.jpg" alt="作品写真 水際の記憶" decoding="async" fetchpriority="low" />
+      </figure>
+      <figure class="image-shard shard-c parallax" data-speed="-0.12">
+        <img src="img/work/work10.jpg" alt="作品写真 光る樹影" decoding="async" fetchpriority="low" />
+      </figure>
+      <figure class="image-shard shard-d parallax" data-speed="-0.23">
+        <img src="img/work/work13.jpg" alt="作品写真 遠い水平線" decoding="async" fetchpriority="low" />
+      </figure>
+
+      <div class="hero-grid">
+        <div class="hero-copy-block parallax" data-speed="0.12">
+          <p class="eyebrow load-in">Ordered Chaos</p>
+          <h1 class="hero-title noise-reveal">
+            <span class="glitch" data-text="感豊">感豊</span>
+          </h1>
+          <figure class="hero-script load-in">
+            <img src="img/fv/fv-title.png?v=20260427-2008" alt="dance in nature, in the chaos." decoding="async"
+              fetchpriority="high" />
+          </figure>
+          <p class="hero-copy load-in">
+            その混沌が、わたしを形作っている。音、光、記憶、思考が境界を失い、ひとつの鼓動になる。
+          </p>
+          <div class="hero-now load-in">
+            <p class="hero-now__label">Now Playing</p>
+            <p class="hero-now__en">Entropic Echoes</p>
+            <p class="hero-now__jp">深淵の記憶</p>
+            <div class="hero-audio-row">
+              <button class="hero-play" type="button" aria-label="深淵の記憶を再生">▶</button>
+              <div class="waveform" aria-hidden="true">
+                <span style="height: 21px"></span><span style="height: 38px"></span><span
+                  style="height: 17px"></span><span style="height: 49px"></span><span style="height: 31px"></span><span
+                  style="height: 56px"></span><span style="height: 19px"></span><span style="height: 45px"></span><span
+                  style="height: 28px"></span><span style="height: 62px"></span><span style="height: 24px"></span><span
+                  style="height: 37px"></span><span style="height: 54px"></span><span style="height: 20px"></span><span
+                  style="height: 47px"></span><span style="height: 33px"></span><span style="height: 58px"></span><span
+                  style="height: 26px"></span><span style="height: 41px"></span><span style="height: 52px"></span><span
+                  style="height: 16px"></span><span style="height: 39px"></span><span style="height: 61px"></span>
+              </div>
+            </div>
+            <p class="listen-label">Listen on</p>
+            <div class="hero-listen" aria-label="配信サービス">
+              <span>Spotify</span>
+              <span>Apple Music</span>
+              <span>YouTube Music</span>
+            </div>
+          </div>
+        </div>
+
+        <figure class="portrait parallax" data-speed="-0.16">
+          <img src="img/profile/kanyutaka.jpg" alt="感豊" decoding="async" fetchpriority="high" />
+          <span class="portrait__shade" aria-hidden="true"></span>
+          <span class="portrait__chip-a" aria-hidden="true"></span>
+          <span class="portrait__chip-b" aria-hidden="true"></span>
+        </figure>
+
+        <p class="hero-side-copy load-in">
+          自然の鼓動を、音に乗せて、すべての感情はここから。
+        </p>
+      </div>
+
+      <figure class="hero-side-video load-in">
+        <img src="img/work/work16.jpg" alt="感豊 映像断片" decoding="async" fetchpriority="low" />
+      </figure>
+
+      <div class="wave-row">
+        <div>
+          <p class="wave-label">Now forming</p>
+          <div class="waveform" aria-hidden="true">
+            <span style="height: 21px"></span><span style="height: 38px"></span><span style="height: 17px"></span><span
+              style="height: 49px"></span><span style="height: 31px"></span><span style="height: 56px"></span><span
+              style="height: 19px"></span><span style="height: 45px"></span><span style="height: 28px"></span><span
+              style="height: 62px"></span><span style="height: 24px"></span><span style="height: 37px"></span><span
+              style="height: 54px"></span><span style="height: 20px"></span><span style="height: 47px"></span><span
+              style="height: 33px"></span><span style="height: 58px"></span><span style="height: 26px"></span><span
+              style="height: 41px"></span><span style="height: 52px"></span><span style="height: 16px"></span><span
+              style="height: 39px"></span><span style="height: 61px"></span><span style="height: 23px"></span><span
+              style="height: 44px"></span><span style="height: 30px"></span><span style="height: 55px"></span><span
+              style="height: 18px"></span><span style="height: 48px"></span><span style="height: 35px"></span><span
+              style="height: 59px"></span><span style="height: 25px"></span>
+          </div>
+        </div>
+        <a class="scroll-link" href="#sound">Scroll</a>
+      </div>
+    </section>
+
+    <section id="sound" class="sound">
+      <div class="gold-splash splash-sound-a" aria-hidden="true"></div>
+      <div class="gold-splash splash-sound-b" aria-hidden="true"></div>
+      <div class="mist-field" aria-hidden="true"></div>
+
+      <div class="sound-frame">
+        <div class="section-sign load-in">
+          <div class="section-sign__num">01</div>
+          <h2 class="section-sign__title">SOUND</h2>
+          <p class="section-sign__sub">音楽活動</p>
+          <p class="sound-copy">
+            音、光、記憶が互いに侵食する。整列しきれない断片を、そのまま聴くための場所。
+          </p>
+          <a class="section-sign__link" href="#sound-players">Listen now</a>
+        </div>
+
+        <figure class="sound-cover parallax" data-speed="-0.08">
+          <img src="img/profile/kanyutaka.jpg" alt="感豊" loading="lazy" decoding="async" fetchpriority="low" />
+        </figure>
+
+        <div class="playlist-panel load-in">
+          <p class="playlist-panel__title">Entropic Echoes</p>
+          <div class="album-list" aria-label="代表曲">
+            <div class="album-list__row"><span>1.</span><span>深淵の記憶</span><span>4:23</span></div>
+            <div class="album-list__row"><span>2.</span><span>境界線のノイズ</span><span>3:51</span></div>
+            <div class="album-list__row"><span>3.</span><span>無数の瞬間</span><span>5:07</span></div>
+            <div class="album-list__row"><span>4.</span><span>静寂のノイズ</span><span>4:48</span></div>
+          </div>
+          <div class="listen-row" aria-label="配信リンク">
+            <a href="#sound-players">Spotify</a>
+            <a href="#sound-players">Apple Music</a>
+            <a href="#sound-players">YouTube Music</a>
+          </div>
+        </div>
+
+        <div class="sound-photo-stack parallax" data-speed="-0.14" aria-hidden="true">
+          <figure><img src="img/work/work16.jpg" alt="" loading="lazy" decoding="async" fetchpriority="low" /></figure>
+          <figure><img src="img/work/work25.jpg" alt="" loading="lazy" decoding="async" fetchpriority="low" /></figure>
+          <figure><img src="img/work/work5.jpg" alt="" loading="lazy" decoding="async" fetchpriority="low" /></figure>
+        </div>
+      </div>
+
+      <div class="sound-stage" id="sound-players">
+        <p class="sound-stage-mark">Listen / Selected tracks</p>
+        <figure class="sound-stage-ghost" aria-hidden="true">
+          <img src="img/work/work16.jpg" alt="" loading="lazy" decoding="async" fetchpriority="low" />
+        </figure>
+        <div class="sound-collage parallax" data-speed="-0.1" aria-hidden="true">
+          <figure class="sound-collage__photo sound-collage__photo--a">
+            <img src="img/work/work33.jpg" alt="" loading="lazy" decoding="async" fetchpriority="low" />
+          </figure>
+          <figure class="sound-collage__photo sound-collage__photo--b">
+            <img src="img/work/work10.jpg" alt="" loading="lazy" decoding="async" fetchpriority="low" />
+          </figure>
+          <figure class="sound-collage__photo sound-collage__photo--c">
+            <img src="img/work/work25.jpg" alt="" loading="lazy" decoding="async" fetchpriority="low" />
+          </figure>
+          <figure class="sound-collage__photo sound-collage__photo--d">
+            <img src="img/work/work490.jpg" alt="" loading="lazy" decoding="async" fetchpriority="low" />
+          </figure>
+          <span class="sound-collage__ring sound-collage__ring--a"></span>
+          <span class="sound-collage__ring sound-collage__ring--b"></span>
+          <span class="sound-collage__scratch"></span>
+          <span class="sound-collage__gold"></span>
+        </div>
+        <div class="lyric-noise" aria-hidden="true">
+          <span>その混沌が　わたしを形作っている</span>
+          <span>境界はほどけ　深淵だけが残る</span>
+          <span>breath / memory / wave / broken light</span>
+        </div>
+
+        <div class="embed-chaos parallax" data-speed="-0.06">
+          <article class="spotify-shell load-in">
+            <div class="player-meta">
+              <span class="player-num">01</span>
+              <span class="player-note">Spotify Embed</span>
+            </div>
+            <h3 class="player-title">深淵の記憶</h3>
+            <div class="embed-slot">
+              <span class="play-mark">▶</span>
+              <div class="mini-wave" aria-hidden="true">
+                <span style="height: 12px"></span><span style="height: 31px"></span><span
+                  style="height: 18px"></span><span style="height: 36px"></span><span style="height: 21px"></span><span
+                  style="height: 28px"></span><span style="height: 10px"></span><span style="height: 34px"></span><span
+                  style="height: 24px"></span><span style="height: 39px"></span><span style="height: 16px"></span><span
+                  style="height: 30px"></span><span style="height: 22px"></span><span style="height: 37px"></span>
+              </div>
+            </div>
+          </article>
+
+          <article class="spotify-shell load-in">
+            <div class="player-meta">
+              <span class="player-num">02</span>
+              <span class="player-note">Spotify Embed</span>
+            </div>
+            <h3 class="player-title">境界線のノイズ</h3>
+            <div class="embed-slot">
+              <span class="play-mark">▶</span>
+              <div class="mini-wave" aria-hidden="true">
+                <span style="height: 22px"></span><span style="height: 14px"></span><span
+                  style="height: 37px"></span><span style="height: 19px"></span><span style="height: 33px"></span><span
+                  style="height: 11px"></span><span style="height: 29px"></span><span style="height: 38px"></span><span
+                  style="height: 15px"></span><span style="height: 35px"></span><span style="height: 20px"></span><span
+                  style="height: 27px"></span><span style="height: 39px"></span><span style="height: 16px"></span>
+              </div>
+            </div>
+          </article>
+
+          <article class="spotify-shell load-in">
+            <div class="player-meta">
+              <span class="player-num">03</span>
+              <span class="player-note">Spotify Embed</span>
+            </div>
+            <h3 class="player-title">Entropic Echoes</h3>
+            <div class="embed-slot">
+              <span class="play-mark">▶</span>
+              <div class="mini-wave" aria-hidden="true">
+                <span style="height: 15px"></span><span style="height: 29px"></span><span
+                  style="height: 13px"></span><span style="height: 40px"></span><span style="height: 17px"></span><span
+                  style="height: 35px"></span><span style="height: 24px"></span><span style="height: 12px"></span><span
+                  style="height: 38px"></span><span style="height: 22px"></span><span style="height: 30px"></span><span
+                  style="height: 18px"></span><span style="height: 34px"></span><span style="height: 21px"></span>
+              </div>
+            </div>
+          </article>
+
+          <article class="spotify-shell load-in">
+            <div class="player-meta">
+              <span class="player-num">04</span>
+              <span class="player-note">Spotify Embed</span>
+            </div>
+            <h3 class="player-title">静寂のノイズ</h3>
+            <div class="embed-slot">
+              <span class="play-mark">▶</span>
+              <div class="mini-wave" aria-hidden="true">
+                <span style="height: 28px"></span><span style="height: 12px"></span><span
+                  style="height: 32px"></span><span style="height: 17px"></span><span style="height: 41px"></span><span
+                  style="height: 20px"></span><span style="height: 36px"></span><span style="height: 14px"></span><span
+                  style="height: 29px"></span><span style="height: 39px"></span><span style="height: 18px"></span><span
+                  style="height: 25px"></span><span style="height: 34px"></span><span style="height: 11px"></span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <div class="track-index" aria-label="感豊 楽曲一覧">
+        <div class="track-row load-in">
+          <span class="track-row__num">01</span>
+          <span class="track-row__title">深淵の記憶</span>
+          <span class="track-row__time">4:23</span>
+        </div>
+        <div class="track-row load-in">
+          <span class="track-row__num">02</span>
+          <span class="track-row__title">境界線のノイズ</span>
+          <span class="track-row__time">3:51</span>
+        </div>
+        <div class="track-row load-in">
+          <span class="track-row__num">03</span>
+          <span class="track-row__title">無数の瞬間</span>
+          <span class="track-row__time">5:07</span>
+        </div>
+        <div class="track-row load-in">
+          <span class="track-row__num">04</span>
+          <span class="track-row__title">静寂のノイズ</span>
+          <span class="track-row__time">4:48</span>
+        </div>
+        <div class="track-row load-in">
+          <span class="track-row__num">05</span>
+          <span class="track-row__title">Entropic Echoes</span>
+          <span class="track-row__time">3:34</span>
+        </div>
+        <div class="track-row load-in">
+          <span class="track-row__num">06</span>
+          <span class="track-row__title">水脈の声</span>
+          <span class="track-row__time">4:10</span>
+        </div>
+        <div class="track-row load-in">
+          <span class="track-row__num">07</span>
+          <span class="track-row__title">逆光する影</span>
+          <span class="track-row__time">3:46</span>
+        </div>
+        <div class="track-row load-in">
+          <span class="track-row__num">08</span>
+          <span class="track-row__title">混沌の庭</span>
+          <span class="track-row__time">5:22</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="eye" class="eye">
+      <div class="gold-splash splash-eye-a" aria-hidden="true"></div>
+      <div class="gold-splash splash-eye-b" aria-hidden="true"></div>
+
+      <div class="eye-frame">
+        <div class="section-sign eye-sign load-in">
+          <div class="section-sign__num">02</div>
+          <h2 class="section-sign__title">EYE</h2>
+          <p class="section-sign__sub">写真作品</p>
+          <a class="section-sign__link" href="#eye">View gallery</a>
+        </div>
+
+        <p class="eye-lead load-in">
+          見ることは、輪郭を決めることではない。光の揺れ、身体の距離、偶然の濁りをそのまま残す。
+        </p>
+
+        <div class="gallery-chaos parallax" data-speed="-0.08" aria-label="写真作品ギャラリー">
+          <figure class="eye-photo eye-photo--left load-in">
+            <img src="img/work/work7.jpg" alt="写真作品 縦の光景" loading="lazy" decoding="async" fetchpriority="low" />
+          </figure>
+          <figure class="eye-photo eye-photo--main load-in">
+            <img src="img/work/work9.jpg" alt="写真作品 山と空" loading="lazy" decoding="async" fetchpriority="low" />
+          </figure>
+          <figure class="eye-photo eye-photo--mid load-in">
+            <img src="img/work/work15.jpg" alt="写真作品 光の断片" loading="lazy" decoding="async" fetchpriority="low" />
+          </figure>
+          <figure class="eye-photo eye-photo--low load-in">
+            <img src="img/work/work33.jpg" alt="写真作品 海の記憶" loading="lazy" decoding="async" fetchpriority="low" />
+          </figure>
+          <figure class="eye-photo eye-photo--small load-in">
+            <img src="img/work/work6.jpg" alt="写真作品 水辺" loading="lazy" decoding="async" fetchpriority="low" />
+          </figure>
+          <figure class="eye-photo eye-photo--tall load-in">
+            <img src="img/work/work24.jpg" alt="写真作品 縦写真" loading="lazy" decoding="async" fetchpriority="low" />
+          </figure>
+        </div>
+
+        <p class="photo-caption">frames drift without asking where the horizon should be.</p>
+      </div>
+    </section>
+
+    <section id="channel" class="channel">
+      <div class="gold-splash splash-channel-a" aria-hidden="true"></div>
+      <div class="gold-splash splash-channel-b" aria-hidden="true"></div>
+
+      <div class="channel-frame">
+        <div class="section-sign channel-sign load-in">
+          <div class="section-sign__num">03</div>
+          <h2 class="section-sign__title">CHANNEL</h2>
+          <p class="section-sign__sub">映像 / YouTube</p>
+          <a class="section-sign__link" href="#channel">View all videos</a>
+        </div>
+
+        <div class="channel-board">
+          <div class="channel-fragments parallax" data-speed="-0.12" aria-hidden="true">
+            <figure><img src="img/work/work11.jpg" alt="" loading="lazy" decoding="async" fetchpriority="low" /></figure>
+            <figure><img src="img/work/work38.jpg" alt="" loading="lazy" decoding="async" fetchpriority="low" /></figure>
+            <figure><img src="img/work/work34.jpg" alt="" loading="lazy" decoding="async" fetchpriority="low" /></figure>
+          </div>
+
+          <div class="video-window load-in">
+            <img src="img/work/work23.jpg" alt="YouTube動画サムネイル" loading="lazy" decoding="async"
+              fetchpriority="low" />
+            <span class="video-play" aria-hidden="true">▶</span>
+            <div class="video-controls" aria-hidden="true">
+              <span>▶</span>
+              <span class="video-progress"></span>
+              <span>0:08 / 2:11</span>
+              <span>HD</span>
+              <span>□</span>
+            </div>
+          </div>
+
+          <div class="video-thumbs load-in" aria-label="動画サムネイル一覧">
+            <div class="video-thumb"><img src="img/work/work10.jpg" alt="動画サムネイル 1" loading="lazy"
+                decoding="async" fetchpriority="low" /></div>
+            <div class="video-thumb"><img src="img/work/work12.jpg" alt="動画サムネイル 2" loading="lazy"
+                decoding="async" fetchpriority="low" /></div>
+            <div class="video-thumb"><img src="img/work/work25.jpg" alt="動画サムネイル 3" loading="lazy"
+                decoding="async" fetchpriority="low" /></div>
+            <div class="video-thumb"><img src="img/work/work490.jpg" alt="動画サムネイル 4" loading="lazy"
+                decoding="async" fetchpriority="low" /></div>
+          </div>
+
+          <p class="channel-note load-in">
+            音の余韻を、映像の断片へ。再生前の静止画にも、すでにノイズと時間が混ざっている。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="log" class="log">
+      <div class="gold-splash splash-log-a" aria-hidden="true"></div>
+      <div class="gold-splash splash-log-b" aria-hidden="true"></div>
+
+      <div class="log-frame">
+        <div class="section-sign log-sign load-in">
+          <div class="section-sign__num">04</div>
+          <h2 class="section-sign__title">LOG</h2>
+          <p class="section-sign__sub">創作・思考</p>
+          <a class="section-sign__link" href="#log">View more</a>
+        </div>
+
+        <div class="scrapbook parallax" data-speed="-0.08">
+          <span class="botanical-line" aria-hidden="true"></span>
+
+          <figure class="paper paper-photo load-in">
+            <img src="img/work/work21.jpg" alt="制作ログ 写真断片" loading="lazy" decoding="async" fetchpriority="low" />
+          </figure>
+
+          <article class="paper paper-note load-in">
+            <em>fragment / 2024.05.17</em>
+            <p>
+              光の濁りを残す。意味になる前の気配を、急いで整理しない。音も写真も、結局は同じ場所から来ている。
+            </p>
+          </article>
+
+          <figure class="paper paper-bird load-in">
+            <img src="img/work/work35.jpg" alt="制作ログ モノクロ断片" loading="lazy" decoding="async" fetchpriority="low" />
+          </figure>
+
+          <figure class="paper paper-small load-in">
+            <img src="img/work/work39.jpg" alt="制作ログ 小さな写真" loading="lazy" decoding="async" fetchpriority="low" />
+          </figure>
+        </div>
+      </div>
+
+      <div class="news-block">
+        <div></div>
+        <div class="news-list load-in">
+          <h3 class="news-title">News</h3>
+          <div class="news-item">
+            <time>2024.05.17</time>
+            <span>写真展「呼吸する光」開催のお知らせ</span>
+          </div>
+          <div class="news-item">
+            <time>2024.05.14</time>
+            <span>新曲「静寂のノイズ」配信リリース</span>
+          </div>
+          <div class="news-item">
+            <time>2024.05.10</time>
+            <span>映像作品「Water Memory」を公開しました</span>
+          </div>
+          <a class="section-sign__link" href="#log">View all news</a>
+        </div>
+      </div>
+
+      <footer class="site-footer">
+        <div class="social-row" aria-label="SNS links">
+          <span>Ig</span>
+          <span>X</span>
+          <span>Yt</span>
+          <span>Sp</span>
+        </div>
+        <p>© 2024 kan yutaka All Rights Reserved.</p>
+      </footer>
+    </section>
+  </main>
+
+  <script>
+    window.addEventListener("DOMContentLoaded", () => {
+      if (!window.gsap) {
+        document.querySelectorAll(".load-in").forEach((el) => {
+          el.style.opacity = 1;
+          el.style.transform = "none";
+        });
+        return;
+      }
+
+      gsap.registerPlugin(window.ScrollTrigger);
+      gsap.to(".ambient-bg__photo", {
+        y: -120,
+        scale: 1.1,
+        ease: "none",
+        scrollTrigger: {
+          trigger: document.body,
+          start: "top top",
+          end: "bottom bottom",
+          scrub: true,
+        },
+      });
+
+      gsap.to(".ambient-bg__smoke", {
+        y: 90,
+        x: -24,
+        ease: "none",
+        scrollTrigger: {
+          trigger: document.body,
+          start: "top top",
+          end: "bottom bottom",
+          scrub: true,
+        },
+      });
+
+      gsap.to(".ambient-bg__gold", {
+        y: 150,
+        rotate: 4,
+        ease: "none",
+        scrollTrigger: {
+          trigger: document.body,
+          start: "top top",
+          end: "bottom bottom",
+          scrub: true,
+        },
+      });
+
+      gsap.to(".ambient-bg__scratch", {
+        y: -70,
+        rotate: -13,
+        ease: "none",
+        scrollTrigger: {
+          trigger: document.body,
+          start: "top top",
+          end: "bottom bottom",
+          scrub: true,
+        },
+      });
+
+      gsap.to(".chaos-cta__link", {
+        y: (index) => (index % 2 ? -26 : 32),
+        x: (index) => (index === 2 ? -18 : 10),
+        rotate: (index) => [-7, 5, -3][index] || 0,
+        ease: "none",
+        scrollTrigger: {
+          trigger: document.body,
+          start: "top top",
+          end: "bottom bottom",
+          scrub: true,
+        },
+      });
+
+      const revealScatter = (selector, trigger, options = {}) => {
+        const items = gsap.utils.toArray(selector);
+        if (!items.length) return;
+
+        items.forEach((item) => item.classList.add("motion-slice"));
+
+        gsap.fromTo(
+          items,
+          {
+            opacity: 0,
+            x: (index) => (index % 2 ? -options.x || -34 : options.x || 34),
+            y: (index) => (options.y || 42) + index * (options.drift || 4),
+            filter: "blur(12px) contrast(190%) brightness(0.82)",
+            clipPath: "inset(18% 0 22% 0)",
+          },
+          {
+            opacity: 1,
+            x: 0,
+            y: 0,
+            filter: "blur(0px) contrast(100%) brightness(1)",
+            clipPath: "inset(0% 0 0% 0)",
+            duration: options.duration || 1.05,
+            stagger: {
+              each: options.stagger || 0.1,
+              from: options.from || "random",
+            },
+            ease: options.ease || "expo.out",
+            clearProps: "transform,filter,clipPath",
+            scrollTrigger: trigger
+              ? {
+                trigger,
+                start: options.start || "top 72%",
+                once: true,
+              }
+              : undefined,
+          }
+        );
+      };
+
+      revealScatter("#hero .load-in, #hero .image-shard", null, {
+        x: 28,
+        y: 34,
+        stagger: 0.09,
+        duration: 1.12,
+      });
+
+      revealScatter("#sound .section-sign, #sound .playlist-panel, #sound .sound-cover", "#sound", {
+        x: 44,
+        y: 52,
+        stagger: 0.12,
+      });
+
+      revealScatter("#sound .sound-photo-stack figure", "#sound", {
+        x: 52,
+        y: 62,
+        stagger: 0.13,
+        start: "top 66%",
+      });
+
+      revealScatter("#sound-players .sound-collage__photo, #sound-players .sound-collage__ring, #sound-players .sound-collage__scratch, #sound-players .sound-collage__gold", "#sound-players", {
+        x: 70,
+        y: 66,
+        stagger: 0.09,
+        start: "top 76%",
+      });
+
+      document.querySelectorAll(".parallax").forEach((el) => {
+        const speed = Number(el.dataset.speed || 0);
+        gsap.to(el, {
+          y: () => window.innerHeight * speed,
+          ease: "none",
+          scrollTrigger: {
+            trigger: el.closest("section") || el,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: true,
+          },
+        });
+      });
+
+      revealScatter(".spotify-shell", "#sound-players", {
+        x: 58,
+        y: 46,
+        stagger: 0.14,
+        start: "top 76%",
+      });
+
+      revealScatter(".track-row", ".track-index", {
+        x: 30,
+        y: 28,
+        stagger: 0.055,
+        duration: 0.82,
+        start: "top 82%",
+      });
+
+      revealScatter("#eye .section-sign, #eye .eye-lead, #eye .eye-photo", "#eye", {
+        x: 64,
+        y: 58,
+        stagger: 0.12,
+        start: "top 70%",
+      });
+
+      revealScatter("#channel .section-sign, #channel .video-window, #channel .video-thumbs, #channel .channel-note", "#channel", {
+        x: 56,
+        y: 52,
+        stagger: 0.12,
+        start: "top 70%",
+      });
+
+      revealScatter("#channel .channel-fragments figure", "#channel", {
+        x: 62,
+        y: 66,
+        stagger: 0.1,
+        start: "top 62%",
+      });
+
+      revealScatter("#log .section-sign, #log .paper, #log .news-list", "#log", {
+        x: 54,
+        y: 58,
+        stagger: 0.12,
+        start: "top 70%",
+      });
+
+      gsap.utils.toArray(".section-sign__title").forEach((title) => {
+        gsap.fromTo(
+          title,
+          {
+            textShadow: "12px 0 rgba(255,0,51,0.46), -9px 0 rgba(185,148,50,0.32)",
+            filter: "blur(4px) contrast(220%)",
+          },
+          {
+            textShadow: "0 0 rgba(255,0,51,0), 0 0 rgba(185,148,50,0)",
+            filter: "blur(0px) contrast(100%)",
+            duration: 0.72,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: title,
+              start: "top 78%",
+              once: true,
+            },
+          }
+        );
+      });
+
+      gsap.to(".lyric-noise span", {
+        x: (index) => (index % 2 ? -90 : 110),
+        ease: "none",
+        scrollTrigger: {
+          trigger: "#sound",
+          start: "top bottom",
+          end: "bottom top",
+          scrub: true,
+        },
+      });
+    });
+  </script>
+</body>
+
+</html>
